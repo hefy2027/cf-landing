@@ -7,7 +7,6 @@ import { deploys, stack } from '../data/site'
   <section id="deploy" class="section section-alt">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow" data-reveal>部署方式</span>
         <h2 class="section-title" data-reveal data-reveal-delay="80">
           两种部署，按需选择
         </h2>

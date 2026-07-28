@@ -71,7 +71,6 @@ const groups: { title: string; links: LinkItem[] }[] = [
 
     <div class="container footer-bottom">
       <span>© {{ year }} {{ site.name }} Contributors · MIT License</span>
-      <span class="footer-ver">v{{ site.version }}</span>
     </div>
   </footer>
 </template>

@@ -6,7 +6,7 @@ export const site = {
   tagline: '一站式 Cloudflare 多账户统一运维平台',
   version: '1.4.0',
   github: 'https://github.com/hefy2027/cf-manager',
-  demo: 'https://mgrcf.pages.dev/admin/',
+  demo: 'https://cloud.umami.is/q/9GbJ5YAyt',
   demoPwd: 'cfmgrbest',
   relatedStore: 'https://github.com/hefy2027/cf-store',
   docs: {
@@ -58,11 +58,13 @@ export const features = [
   {
     icon: 'tunnel',
     title: '隧道管理',
+    badge: 'NEW',
     desc: 'Tunnel 创建删除、Ingress 可视化编辑，一键回源向导自动配置 DNS CNAME + ingress。'
   },
   {
     icon: 'rules',
     title: '规则引擎',
+    badge: 'NEW',
     desc: '8 种规则类型（回源 / 重写 / 头转换 / 缓存 / 防火墙 / 限速 / 重定向），结构化表单 + 表达式生成器。'
   },
   {
@@ -107,22 +109,26 @@ export const scenarios = [
   {
     icon: 'dev',
     title: '个人开发者',
-    desc: '把多个 Cloudflare 账户汇总到一个面板，本地调试 AI 推理与浏览器渲染，用 OpenAI 兼容接口接入自己的工具链。'
+    desc: '把多个 Cloudflare 账户汇总到一个面板，本地调试 AI 推理与浏览器渲染，用 OpenAI 兼容接口接入自己的工具链。',
+    points: ['告别多账户反复登录', '本地调试 AI / 渲染', 'OpenAI 兼容接口对接工具链']
   },
   {
     icon: 'ops',
     title: '团队运维',
-    desc: '统一管理团队名下域名、Workers、DNS 与存储，跨账户批量部署，配额与用量集中可视。'
+    desc: '统一管理团队名下域名、Workers、DNS 与存储，跨账户批量部署，配额与用量集中可视。',
+    points: ['多账户权限集中管理', '跨账户批量部署', '配额用量一目了然']
   },
   {
     icon: 'tunnel',
     title: '回源与组网',
-    desc: '一键回源向导自动打通 Tunnel + DNS CNAME，结构化配置 Ingress，无需手写命令行。'
+    desc: '一键回源向导自动打通 Tunnel + DNS CNAME，结构化配置 Ingress，无需手写命令行。',
+    points: ['可视化编辑 Ingress', 'CNAME 自动发现', '向导化操作，零命令行']
   },
   {
     icon: 'self',
     title: '自托管私有部署',
-    desc: 'Docker Compose 一键自建，HTTP/SOCKS5 代理支持，凭据加密不外泄，完全自有数据。'
+    desc: 'Docker Compose 一键自建，HTTP/SOCKS5 代理支持，凭据加密不外泄，完全自有数据。',
+    points: ['数据完全自控', 'AES 加密凭证', '代理网络环境适配']
   }
 ]
 

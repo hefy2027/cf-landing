@@ -80,7 +80,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           v-for="l in docLinks"
           :key="l.to"
           :to="l.to"
-          class="nav-doc"
+          active-class="nav-active"
           @click="open = false"
           >{{ l.label }}</RouterLink
         >
@@ -90,20 +90,22 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           rel="noopener"
           class="nav-demo"
           @click="open = false"
-          >在线演示</a
+          ><AppIcon name="play" :size="14" /> 在线演示</a
         >
       </nav>
 
       <div class="nav-cta">
-        <a
-          :href="site.github"
-          target="_blank"
-          rel="noopener"
-          class="btn btn-ghost btn-sm"
-        >
-          <AppIcon name="github" :size="16" /> GitHub
-          <GitHubBadge />
-        </a>
+        <div class="gh-group">
+          <a
+            :href="site.github"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-ghost btn-sm gh-btn"
+          >
+            <AppIcon name="github" :size="16" /> GitHub
+          </a>
+          <span class="gh-badge-wrap"><GitHubBadge /></span>
+        </div>
         <button
           class="burger"
           :class="{ open }"
@@ -174,9 +176,18 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   background: rgba(255, 255, 255, 0.05);
 }
 .nav-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   color: var(--accent) !important;
+  border: 1px solid rgba(243, 128, 32, 0.22);
+  padding: 6px 14px !important;
+  font-weight: 600;
 }
-.nav-doc {
+.nav-demo:hover {
+  background: var(--accent-soft) !important;
+}
+.nav-active {
   color: var(--text) !important;
   font-weight: 600;
 }
@@ -184,6 +195,27 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   display: flex;
   align-items: center;
   gap: 10px;
+}
+.gh-group {
+  display: flex;
+  align-items: center;
+}
+.gh-btn {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-right: none !important;
+  padding: 9px 14px;
+  font-size: 14px;
+}
+.gh-badge-wrap {
+  display: flex;
+  align-items: center;
+  padding: 9px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-strong);
+  border-radius: 0 12px 12px 0;
+  font-size: 13px;
+  color: var(--text-muted);
 }
 .btn-sm {
   padding: 9px 16px;

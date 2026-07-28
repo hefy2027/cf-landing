@@ -7,7 +7,6 @@ import { pillars } from '../data/site'
   <section id="pillars" class="section">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow" data-reveal>三位一体</span>
         <h2 class="section-title" data-reveal data-reveal-delay="80">
           一个平台，三大核心能力
         </h2>
@@ -28,7 +27,6 @@ import { pillars } from '../data/site'
           <div class="pillar-icon">
             <AppIcon :name="p.icon" :size="26" />
           </div>
-          <span class="pillar-no">0{{ i + 1 }}</span>
           <h3 class="pillar-title">{{ p.title }}</h3>
           <p class="pillar-desc">{{ p.desc }}</p>
           <ul class="pillar-points">
@@ -77,15 +75,6 @@ import { pillars } from '../data/site'
   color: var(--accent);
   border: 1px solid rgba(243, 128, 32, 0.25);
   margin-bottom: 20px;
-}
-.pillar-no {
-  position: absolute;
-  top: 28px;
-  right: 30px;
-  font-family: var(--mono);
-  font-size: 13px;
-  color: var(--text-dim);
-  letter-spacing: 0.1em;
 }
 .pillar-title {
   font-size: 21px;

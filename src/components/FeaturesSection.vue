@@ -7,7 +7,6 @@ import { features } from '../data/site'
   <section id="features" class="section section-alt">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow" data-reveal>功能矩阵</span>
         <h2 class="section-title" data-reveal data-reveal-delay="80">
           覆盖 Cloudflare 运维全链路
         </h2>
@@ -28,7 +27,10 @@ import { features } from '../data/site'
           <div class="feature-icon">
             <AppIcon :name="f.icon" :size="22" />
           </div>
-          <h3 class="feature-title">{{ f.title }}</h3>
+          <h3 class="feature-title">
+            {{ f.title }}
+            <span v-if="f.badge" class="badge-new">{{ f.badge }}</span>
+          </h3>
           <p class="feature-desc">{{ f.desc }}</p>
         </article>
       </div>

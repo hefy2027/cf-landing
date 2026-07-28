@@ -23,7 +23,7 @@ import { site } from '../data/site'
           rel="noopener"
           class="btn btn-primary btn-lg"
         >
-          <AppIcon name="github" :size="18" /> 获取源码
+          <AppIcon name="github" :size="18" /> GitHub
           <GitHubBadge />
         </a>
         <a
@@ -32,7 +32,7 @@ import { site } from '../data/site'
           rel="noopener"
           class="btn btn-ghost btn-lg"
         >
-          <AppIcon name="play" :size="16" /> 体验在线演示
+          <AppIcon name="play" :size="16" /> 在线演示
         </a>
       </div>
       <div class="cta-note">

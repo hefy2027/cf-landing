@@ -7,7 +7,6 @@ import { scenarios } from '../data/site'
   <section id="scenarios" class="section">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow" data-reveal>应用场景</span>
         <h2 class="section-title" data-reveal data-reveal-delay="80">
           谁在用 CF Manager
         </h2>
@@ -29,6 +28,11 @@ import { scenarios } from '../data/site'
           <div class="sc-body">
             <h3 class="sc-title">{{ s.title }}</h3>
             <p class="sc-desc">{{ s.desc }}</p>
+            <ul v-if="s.points" class="sc-points">
+              <li v-for="pt in s.points" :key="pt">
+                <AppIcon name="check" :size="13" />{{ pt }}
+              </li>
+            </ul>
           </div>
         </article>
       </div>
@@ -69,6 +73,24 @@ import { scenarios } from '../data/site'
   font-size: 14.5px;
   color: var(--text-muted);
   line-height: 1.65;
+  margin-bottom: 14px;
+}
+.sc-points {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.sc-points li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text);
+}
+.sc-points li :deep(svg) {
+  color: var(--accent);
+  flex-shrink: 0;
 }
 
 @media (max-width: 760px) {
