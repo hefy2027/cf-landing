@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import AppIcon from './AppIcon.vue'
 import GitHubBadge from './GitHubBadge.vue'
-import { site } from '../data/site'
+import { useSiteData } from '../composables/useSiteData'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const { site } = useSiteData()
 </script>
 
 <template>
@@ -9,13 +13,10 @@ import { site } from '../data/site'
     <div class="glow glow-c"></div>
     <div class="container cta-inner" data-reveal>
       <span class="eyebrow"
-        ><AppIcon name="star" :size="14" /> 开源 · MIT 协议</span
+        ><AppIcon name="star" :size="14" /> {{ t('cta.eyebrow') }}</span
       >
-      <h2 class="cta-title">现在就开始管理你的 Cloudflare</h2>
-      <p class="cta-desc">
-        Fork 仓库一键部署到 Cloudflare Pages，或用 Docker 自建。
-        几分钟即可拥有一个统一的多账户运维面板。
-      </p>
+      <h2 class="cta-title">{{ t('cta.title') }}</h2>
+      <p class="cta-desc">{{ t('cta.desc') }}</p>
       <div class="cta-actions">
         <a
           :href="site.github"
@@ -32,12 +33,12 @@ import { site } from '../data/site'
           rel="noopener"
           class="btn btn-ghost btn-lg"
         >
-          <AppIcon name="play" :size="16" /> 在线演示
+          <AppIcon name="play" :size="16" /> {{ t('cta.demo') }}
         </a>
       </div>
       <div class="cta-note">
-        演示站密码 <code>{{ site.demoPwd }}</code>
-        · 仅限体验，请勿用于真实业务
+        {{ t('cta.demoNote') }} <code>{{ site.demoPwd }}</code>
+        {{ t('cta.demoNoteSuffix') }}
       </div>
     </div>
   </section>

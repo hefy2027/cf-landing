@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import AppIcon from './AppIcon.vue'
-import { features } from '../data/site'
+import { useSiteData } from '../composables/useSiteData'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const { features } = useSiteData()
 </script>
 
 <template>
@@ -8,11 +12,10 @@ import { features } from '../data/site'
     <div class="container">
       <div class="section-head">
         <h2 class="section-title" data-reveal data-reveal-delay="80">
-          覆盖 Cloudflare 运维全链路
+          {{ t('features.sectionTitle') }}
         </h2>
         <p class="section-lead" data-reveal data-reveal-delay="140">
-          从域名 DNS 到边缘计算，从对象存储到 AI 推理，12 大模块一站式管理，
-          结构化表单替代手写 JSON 与命令行。
+          {{ t('features.sectionLead') }}
         </p>
       </div>
 

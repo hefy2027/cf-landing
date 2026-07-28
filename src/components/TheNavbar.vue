@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import AppIcon from './AppIcon.vue'
 import GitHubBadge from './GitHubBadge.vue'
-import { site } from '../data/site'
+import { useSiteData } from '../composables/useSiteData'
+
+const { t, locale } = useI18n()
+const { site } = useSiteData()
 
 const scrolled = ref(false)
 const open = ref(false)
@@ -11,15 +15,20 @@ const open = ref(false)
 const router = useRouter()
 const route = useRoute()
 
-const links = [
-  { href: '#pillars', label: '核心能力' },
-  { href: '#features', label: '功能特性' },
-  { href: '#scenarios', label: '应用场景' },
-  { href: '#deploy', label: '部署方式' }
-]
-const docLinks = [
-  { to: '/docs', label: '文档' }
-]
+const links = computed(() => [
+  { href: '#pillars', label: t('nav.coreFeatures') },
+  { href: '#features', label: t('nav.features') },
+  { href: '#scenarios', label: t('nav.scenarios') },
+  { href: '#deploy', label: t('nav.deploy') }
+])
+const docLinks = computed(() => [
+  { to: '/docs', label: t('nav.docs') }
+])
+
+function toggleLang() {
+  locale.value = locale.value === 'zh-CN' ? 'en' : 'zh-CN'
+  localStorage.setItem('cf-manager-locale', locale.value)
+}
 
 const NAV_OFFSET = 70
 function scrollToHash(hash: string) {
@@ -90,7 +99,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           rel="noopener"
           class="nav-demo"
           @click="open = false"
-          ><AppIcon name="play" :size="14" /> 在线演示</a
+          ><AppIcon name="play" :size="14" /> {{ t('nav.demo') }}</a
         >
       </nav>
 
@@ -107,9 +116,16 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           <span class="gh-badge-wrap"><GitHubBadge /></span>
         </div>
         <button
+          class="lang-toggle"
+          :title="t('lang.switchTo')"
+          @click="toggleLang"
+        >
+          {{ locale === 'zh-CN' ? 'EN' : '中文' }}
+        </button>
+        <button
           class="burger"
           :class="{ open }"
-          aria-label="菜单"
+          :aria-label="t('nav.menu')"
           @click="open = !open"
         >
           <span></span><span></span><span></span>
@@ -195,6 +211,23 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   display: flex;
   align-items: center;
   gap: 10px;
+}
+.lang-toggle {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 .gh-group {
   display: flex;

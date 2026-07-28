@@ -1,40 +1,45 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import AppIcon from './AppIcon.vue'
-import { site } from '../data/site'
+import { useSiteData } from '../composables/useSiteData'
+
+const { t } = useI18n()
+const { site } = useSiteData()
 
 const year = new Date().getFullYear()
 
 interface LinkItem { label: string; href: string; ext?: boolean; internal?: boolean }
 
-const groups: { title: string; links: LinkItem[] }[] = [
+const groups = computed(() => [
   {
-    title: '产品',
+    title: t('footer.groupProduct'),
     links: [
-      { label: '核心能力', href: '#pillars' },
-      { label: '功能特性', href: '#features' },
-      { label: '应用场景', href: '#scenarios' },
-      { label: '部署方式', href: '#deploy' }
+      { label: t('footer.linkCoreFeatures'), href: '#pillars' },
+      { label: t('footer.linkFeatures'), href: '#features' },
+      { label: t('footer.linkScenarios'), href: '#scenarios' },
+      { label: t('footer.linkDeploy'), href: '#deploy' }
     ]
   },
   {
-    title: '文档',
+    title: t('footer.groupDocs'),
     links: [
-      { label: '什么是 CF Manager', href: '/docs/intro', internal: true },
-      { label: '快速开始', href: '/docs/quick-start', internal: true },
-      { label: '部署文档', href: '/docs/deploy', internal: true },
-      { label: '账户认证', href: '/docs/account-auth', internal: true },
-      { label: '外部 API', href: '/docs/api-v1', internal: true }
+      { label: t('footer.linkIntro'), href: '/docs/intro', internal: true },
+      { label: t('footer.linkQuickStart'), href: '/docs/quick-start', internal: true },
+      { label: t('footer.linkDeployDoc'), href: '/docs/deploy', internal: true },
+      { label: t('footer.linkAuth'), href: '/docs/account-auth', internal: true },
+      { label: t('footer.linkApi'), href: '/docs/api-v1', internal: true }
     ]
   },
   {
-    title: '资源',
+    title: t('footer.groupResources'),
     links: [
-      { label: 'GitHub 仓库', href: site.github, ext: true },
-      { label: '在线演示', href: site.demo, ext: true },
-      { label: '应用商店模板 (cf-store)', href: site.relatedStore, ext: true }
+      { label: t('footer.linkGitHub'), href: site.value.github, ext: true },
+      { label: t('footer.linkDemo'), href: site.value.demo, ext: true },
+      { label: t('footer.linkStore'), href: site.value.relatedStore, ext: true }
     ]
   }
-]
+])
 </script>
 
 <template>
@@ -46,10 +51,7 @@ const groups: { title: string; links: LinkItem[] }[] = [
           <span class="brand-text">{{ site.name }}</span>
         </a>
         <p class="footer-tag">{{ site.tagline }}</p>
-        <p class="footer-warn">
-          本工具仅供学习、技术研究与已授权账户的自有运维管理使用。请遵守
-          Cloudflare 服务条款，禁止用于对外公共 AI / 渲染中转或转售。
-        </p>
+        <p class="footer-warn">{{ t('footer.warn') }}</p>
       </div>
 
       <div class="footer-links">
@@ -70,7 +72,7 @@ const groups: { title: string; links: LinkItem[] }[] = [
     </div>
 
     <div class="container footer-bottom">
-      <span>© {{ year }} {{ site.name }} Contributors · MIT License</span>
+      <span>© {{ year }} {{ site.name }} {{ t('footer.copyright') }}</span>
     </div>
   </footer>
 </template>

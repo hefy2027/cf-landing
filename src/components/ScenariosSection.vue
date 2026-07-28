@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import AppIcon from './AppIcon.vue'
-import { scenarios } from '../data/site'
+import { useSiteData } from '../composables/useSiteData'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const { scenarios } = useSiteData()
 </script>
 
 <template>
@@ -8,11 +12,10 @@ import { scenarios } from '../data/site'
     <div class="container">
       <div class="section-head">
         <h2 class="section-title" data-reveal data-reveal-delay="80">
-          谁在用 CF Manager
+          {{ t('scenarios.sectionTitle') }}
         </h2>
         <p class="section-lead" data-reveal data-reveal-delay="140">
-          无论你是独立开发者还是团队运维，CF Manager 都能适配你的 Cloudflare
-          工作流。
+          {{ t('scenarios.sectionLead') }}
         </p>
       </div>
 

@@ -1,14 +1,11 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import AppIcon from './AppIcon.vue'
 import GitHubBadge from './GitHubBadge.vue'
-import { site } from '../data/site'
+import { useSiteData } from '../composables/useSiteData'
 
-const stats = [
-  { v: '12+', l: '功能模块' },
-  { v: '2', l: '部署方式' },
-  { v: '2', l: '后端架构' },
-  { v: '100%', l: '开源' }
-]
+const { t } = useI18n()
+const { site, stats } = useSiteData()
 </script>
 
 <template>
@@ -20,7 +17,7 @@ const stats = [
     <div class="container hero-inner">
       <div class="hero-copy">
         <span class="eyebrow" data-reveal
-          ><AppIcon name="bolt" :size="14" /> 全栈 Cloudflare 运维</span
+          ><AppIcon name="bolt" :size="14" /> {{ t('hero.eyebrow') }}</span
         >
         <h1 class="hero-title" data-reveal data-reveal-delay="80">
           {{ site.name }}
@@ -29,13 +26,12 @@ const stats = [
           {{ site.slogan }}
         </p>
         <p class="hero-desc" data-reveal data-reveal-delay="220">
-          别再在多个 Cloudflare 页面之间切换了。一个面板，管完所有账户的 DNS、
-          Workers、存储与 AI 推理，可视化操作，无需手写命令行。
+          {{ t('hero.desc') }}
         </p>
 
         <div class="hero-cta" data-reveal data-reveal-delay="300">
           <RouterLink to="/docs" class="btn btn-primary">
-            <AppIcon name="arrow" :size="18" /> 阅读文档
+            <AppIcon name="arrow" :size="18" /> {{ t('hero.readDocs') }}
           </RouterLink>
           <a
             :href="site.github"
@@ -52,7 +48,7 @@ const stats = [
             rel="noopener"
             class="btn btn-ghost"
           >
-            <AppIcon name="play" :size="16" /> 在线演示
+            <AppIcon name="play" :size="16" /> {{ t('hero.demo') }}
           </a>
         </div>
 
@@ -72,7 +68,7 @@ const stats = [
           </div>
           <img
             src="/dashboard.png"
-            alt="CF Manager 管理面板仪表盘"
+            alt="CF Manager Dashboard"
             width="1200"
             height="500"
             loading="eager"
@@ -80,10 +76,10 @@ const stats = [
           />
         </div>
         <div class="float-card fc-1">
-          <AppIcon name="tunnel" :size="18" /><span>隧道管理 <em class="fc-new">NEW</em></span>
+          <AppIcon name="tunnel" :size="18" /><span>{{ t('hero.tunnelCard') }} <em class="fc-new">NEW</em></span>
         </div>
         <div class="float-card fc-2">
-          <AppIcon name="rules" :size="18" /><span>规则引擎 <em class="fc-new">NEW</em></span>
+          <AppIcon name="rules" :size="18" /><span>{{ t('hero.rulesCard') }} <em class="fc-new">NEW</em></span>
         </div>
       </div>
     </div>

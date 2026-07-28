@@ -1,36 +1,40 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { docs, getDoc } from '../content/docs'
+import { useI18n } from 'vue-i18n'
+import { useDocs } from '../composables/useDocs'
 import { renderMarkdown } from '../utils/markdown'
 import DocSidebar from '../components/DocSidebar.vue'
 import TheFooter from '../components/TheFooter.vue'
+
+const { t } = useI18n()
 const route = useRoute()
+const { docs, getDoc } = useDocs()
 const doc = computed(() => getDoc(route.params.slug as string))
 const html = computed(() => (doc.value ? renderMarkdown(doc.value.content) : ''))
-const idx = computed(() => (doc.value ? docs.findIndex((d) => d.slug === doc.value!.slug) : -1))
-const prev = computed(() => (idx.value > 0 ? docs[idx.value - 1] : null))
-const next = computed(() => (idx.value >= 0 && idx.value < docs.length - 1 ? docs[idx.value + 1] : null))
-watch(() => doc.value?.title, (t) => { if (t) document.title = `${t} · CF Manager 文档` }, { immediate: true })
+const idx = computed(() => (doc.value ? docs.value.findIndex((d) => d.slug === doc.value!.slug) : -1))
+const prev = computed(() => (idx.value > 0 ? docs.value[idx.value - 1] : null))
+const next = computed(() => (idx.value >= 0 && idx.value < docs.value.length - 1 ? docs.value[idx.value + 1] : null))
+watch(() => doc.value?.title, (title) => { if (title) document.title = `${title} ${t('doc.titleSuffix')}` }, { immediate: true })
 </script>
 <template>
   <div class="doc-article-page">
     <div class="container doc-layout">
       <DocSidebar />
       <main v-if="doc" class="doc-content">
-        <div class="doc-breadcrumb"><RouterLink to="/docs">文档</RouterLink><span>/</span><span class="bc-group">{{ doc.group }}</span></div>
+        <div class="doc-breadcrumb"><RouterLink to="/docs">{{ t('doc.breadcrumb') }}</RouterLink><span>/</span><span class="bc-group">{{ doc.group }}</span></div>
         <h1 class="article-title">{{ doc.title }}</h1>
         <p class="article-desc">{{ doc.desc }}</p>
         <div class="markdown-body" v-html="html"></div>
         <nav class="doc-pager">
-          <RouterLink v-if="prev" :to="`/docs/${prev.slug}`" class="pager-link"><span class="pager-label">上一篇</span><span class="pager-title">{{ prev.title }}</span></RouterLink>
+          <RouterLink v-if="prev" :to="`/docs/${prev.slug}`" class="pager-link"><span class="pager-label">{{ t('doc.prev') }}</span><span class="pager-title">{{ prev.title }}</span></RouterLink>
           <span v-else></span>
-          <RouterLink v-if="next" :to="`/docs/${next.slug}`" class="pager-link pager-next"><span class="pager-label">下一篇</span><span class="pager-title">{{ next.title }}</span></RouterLink>
+          <RouterLink v-if="next" :to="`/docs/${next.slug}`" class="pager-link pager-next"><span class="pager-label">{{ t('doc.next') }}</span><span class="pager-title">{{ next.title }}</span></RouterLink>
         </nav>
       </main>
       <main v-else class="doc-content">
-        <p class="not-found">未找到该文档。</p>
-        <RouterLink to="/docs" class="btn btn-ghost">返回文档</RouterLink>
+        <p class="not-found">{{ t('doc.notFound') }}</p>
+        <RouterLink to="/docs" class="btn btn-ghost">{{ t('doc.backToDocs') }}</RouterLink>
       </main>
     </div>
     <TheFooter />

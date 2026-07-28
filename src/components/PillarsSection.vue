@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import AppIcon from './AppIcon.vue'
-import { pillars } from '../data/site'
+import { useSiteData } from '../composables/useSiteData'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const { pillars } = useSiteData()
 </script>
 
 <template>
@@ -8,11 +12,10 @@ import { pillars } from '../data/site'
     <div class="container">
       <div class="section-head">
         <h2 class="section-title" data-reveal data-reveal-delay="80">
-          一个平台，三大核心能力
+          {{ t('pillars.sectionTitle') }}
         </h2>
         <p class="section-lead" data-reveal data-reveal-delay="140">
-          CF Manager 把分散在多个 Cloudflare 后台的运维工作收拢到统一面板，
-          从账户到资源再到 AI 推理，端到端覆盖。
+          {{ t('pillars.sectionLead') }}
         </p>
       </div>
 

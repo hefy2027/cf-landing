@@ -2,7 +2,7 @@
 
 declare module '*.vue' {
   import type { DefineComponent } from 'vue'
-  const component: DefineComponent<{}, {}, any>
+  const component: DefineComponent<object, object, any>
   export default component
 }
 
@@ -10,4 +10,8 @@ declare module '*.vue' {
 declare module '*.md?raw' {
   const src: string
   export default src
+}
+
+declare module 'vue-i18n' {
+  export * from 'vue-i18n/dist/vue-i18n'
 }

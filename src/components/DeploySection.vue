@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import AppIcon from './AppIcon.vue'
-import { deploys, stack } from '../data/site'
+import { useSiteData } from '../composables/useSiteData'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const { deploys, stack } = useSiteData()
 </script>
 
 <template>
@@ -8,10 +12,10 @@ import { deploys, stack } from '../data/site'
     <div class="container">
       <div class="section-head">
         <h2 class="section-title" data-reveal data-reveal-delay="80">
-          两种部署，按需选择
+          {{ t('deploy.sectionTitle') }}
         </h2>
         <p class="section-lead" data-reveal data-reveal-delay="140">
-          同一套业务逻辑，双后端架构。零成本上云或完全自建，都能开箱即用。
+          {{ t('deploy.sectionLead') }}
         </p>
       </div>
 
@@ -41,7 +45,7 @@ import { deploys, stack } from '../data/site'
       </div>
 
       <div class="stack" data-reveal>
-        <div class="stack-label">技术栈</div>
+        <div class="stack-label">{{ t('deploy.stackLabel') }}</div>
         <div class="stack-grid">
           <div v-for="s in stack" :key="s.k" class="stack-item">
             <span class="stack-k">{{ s.k }}</span>

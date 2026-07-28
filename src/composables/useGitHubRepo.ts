@@ -1,5 +1,7 @@
 import { ref, onMounted } from 'vue'
-import { site } from '../data/site'
+
+// GitHub repo URL — static config, not locale-dependent
+const GITHUB_REPO = 'https://github.com/hefy2027/cf-manager'
 
 const CACHE_KEY = 'cfmgr:gh:repo'
 const CACHE_TTL = 1000 * 60 * 60 // 1 小时
@@ -32,7 +34,7 @@ export function useGitHubRepo() {
   const error = ref(false)
 
   function load() {
-    const repo = parseRepo(site.github)
+    const repo = parseRepo(GITHUB_REPO)
     if (!repo) return
 
     // 命中本地缓存则直接返回，避免频繁打 GitHub API

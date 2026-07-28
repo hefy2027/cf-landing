@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import { docs, groups } from '../content/docs'
+import { useI18n } from 'vue-i18n'
+import { useDocs } from '../composables/useDocs'
 import { useRoute } from 'vue-router'
+
+const { t } = useI18n()
 const route = useRoute()
+const { docs, groups } = useDocs()
 </script>
 
 <template>
   <aside class="doc-sidebar">
     <div class="sidebar-inner">
-      <RouterLink to="/docs" class="sidebar-home">文档首页</RouterLink>
+      <RouterLink to="/docs" class="sidebar-home">{{ t('doc.home') }}</RouterLink>
       <div v-for="g in groups" :key="g" class="sidebar-group">
         <h4 class="sidebar-group-title">{{ g }}</h4>
         <RouterLink
