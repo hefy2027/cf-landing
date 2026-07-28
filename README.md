@@ -29,9 +29,28 @@ landing/
 │   ├── quick-start.md         #   快速开始
 │   ├── deploy.md              #   部署文档
 │   ├── account-auth.md        #   账户认证
-│   └── api-v1.md              #   外部 API 文档
+│   ├── account-management.md  #   账户管理
+│   ├── dns.md                 #   DNS 管理
+│   ├── workers-pages.md       #   Workers 与 Pages 管理
+│   ├── tunnel.md              #   隧道与回源
+│   ├── storage.md             #   存储管理（KV / D1 / R2）
+│   ├── ai-rendering.md        #   AI 推理与浏览器渲染
+│   ├── app-store.md           #   应用商店
+│   ├── api-v1.md              #   外部 API 文档
+│   ├── security.md            #   安全最佳实践
+│   ├── troubleshooting.md     #   故障排查
+│   ├── architecture.md        #   技术架构
+│   └── changelog.md           #   更新日志
 ├── index.html
-├── public/favicon.svg
+├── public/
+│   ├── favicon.svg
+│   ├── og-image.png
+│   └── screenshots/           # 演示站界面截图
+│       ├── dashboard.png
+│       ├── accounts.png
+│       ├── dns.png
+│       ├── workers.png
+│       └── tunnels.png
 ├── vite.config.ts
 └── src/
     ├── main.ts                # 入口（挂载 router）
@@ -41,7 +60,7 @@ landing/
     ├── env.d.ts
     ├── composables/useReveal.ts     # 滚动入场动效（IntersectionObserver）
     ├── data/site.ts           # 内容集中管理（链接/功能/场景/部署）
-    ├── content/docs.ts        # 文档元数据，以 ?raw 导入 docs/*.md
+    ├── content/docs.ts        # 文档元数据，以 ?raw 导入 docs/*.md（8 个分组）
     ├── utils/markdown.ts      # markdown-it + DOMPurify 渲染
     ├── components/            # TheNavbar / HeroSection / PillarsSection /
     │                           #   FeaturesSection / ScenariosSection / DeploySection /
@@ -54,7 +73,23 @@ landing/
 文档为项目内**自包含副本**，位于 `landing/docs/`，构建时通过 `src/content/docs.ts` 以 `?raw` 导入并渲染。
 新增/修改文档：直接在 `landing/docs/` 编辑 `.md`，并在 `src/content/docs.ts` 的 `docs` 数组中维护标题、描述、分组与排序。
 
+## 文档分组
+
+文档按工作流划分为 8 个分组，共 16 篇：
+
+| 分组 | 篇数 | 包含 |
+|------|------|------|
+| 入门 | 3 | intro / quick-start / deploy |
+| 账户 | 2 | account-auth / account-management |
+| 功能 | 5 | dns / workers-pages / tunnel / storage / ai-rendering |
+| 商店 | 1 | app-store |
+| 接口 | 1 | api-v1 |
+| 安全 | 1 | security |
+| 排查 | 1 | troubleshooting |
+| 参考 | 2 | architecture / changelog |
+
 ## 定制
 
 - 内容文案、链接、版本号集中在 `src/data/site.ts`。
+- 文档元数据与排序在 `src/content/docs.ts`。
 - 主题色（Cloudflare 橙红 `#f38020`）与深色基调定义在 `src/style.css` 的 `:root` CSS 变量中。

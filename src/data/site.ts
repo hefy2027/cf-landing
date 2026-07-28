@@ -12,7 +12,8 @@ export const site = {
   docs: {
     deploy: 'https://github.com/hefy2027/cf-manager/blob/master/docs/deploy.md',
     api: 'https://github.com/hefy2027/cf-manager/blob/master/docs/api-v1.md',
-    auth: 'https://github.com/hefy2027/cf-manager/blob/master/docs/account-auth.md'
+    auth: 'https://github.com/hefy2027/cf-manager/blob/master/docs/account-auth.md',
+    changelog: 'https://github.com/hefy2027/cf-manager/blob/master/CHANGELOG.md'
   }
 }
 
