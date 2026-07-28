@@ -90,10 +90,12 @@ export function useDocs() {
   const { locale } = useI18n()
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const locales = locale.value === 'zh-CN' ? (zhCN as any).data : (en as any).data
+  const locales = computed(() =>
+    locale.value === 'zh-CN' ? (zhCN as any).data : (en as any).data
+  )
 
   const docs = computed((): DocMeta[] => {
-    const items = locales.docs as DocLocaleItem[]
+    const items = locales.value.docs as DocLocaleItem[]
     const rawMap = locale.value === 'zh-CN' ? RAW_CONTENT_ZH : RAW_CONTENT_EN
     return items.map((item: DocLocaleItem, i: number) => ({
       ...item,
@@ -102,7 +104,7 @@ export function useDocs() {
     }))
   })
 
-  const groups = computed(() => locales.docGroups as string[])
+  const groups = computed(() => locales.value.docGroups as string[])
 
   function getDoc(slug: string): DocMeta | undefined {
     return docs.value.find((d) => d.slug === slug)
