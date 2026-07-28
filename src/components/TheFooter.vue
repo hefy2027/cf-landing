@@ -10,8 +10,9 @@ const { site } = useSiteData()
 const year = new Date().getFullYear()
 
 interface LinkItem { label: string; href: string; ext?: boolean; internal?: boolean }
+type Group = { title: string; links: LinkItem[] }
 
-const groups = computed(() => [
+const groups = computed<Group[]>(() => [
   {
     title: t('footer.groupProduct'),
     links: [

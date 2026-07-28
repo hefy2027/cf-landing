@@ -84,22 +84,25 @@ const RAW_CONTENT_EN: Record<string, string> = {
   architecture: architectureRawEn
 }
 
+interface DocLocaleItem { slug: string; title: string; desc: string; group: string }
+
 export function useDocs() {
   const { locale } = useI18n()
 
-  const data = computed(() => (locale.value === 'zh-CN' ? zhCN.data : en.data))
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const locales = locale.value === 'zh-CN' ? (zhCN as any).data : (en as any).data
 
   const docs = computed((): DocMeta[] => {
-    const items = data.value.docs
+    const items = locales.docs as DocLocaleItem[]
     const rawMap = locale.value === 'zh-CN' ? RAW_CONTENT_ZH : RAW_CONTENT_EN
-    return items.map((item, i) => ({
+    return items.map((item: DocLocaleItem, i: number) => ({
       ...item,
       order: i + 1,
       content: rawMap[item.slug] || ''
     }))
   })
 
-  const groups = computed(() => data.value.docGroups)
+  const groups = computed(() => locales.docGroups as string[])
 
   function getDoc(slug: string): DocMeta | undefined {
     return docs.value.find((d) => d.slug === slug)

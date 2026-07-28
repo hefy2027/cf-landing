@@ -11,7 +11,3 @@ declare module '*.md?raw' {
   const src: string
   export default src
 }
-
-declare module 'vue-i18n' {
-  export * from 'vue-i18n/dist/vue-i18n'
-}

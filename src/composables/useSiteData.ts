@@ -17,19 +17,35 @@ const META = {
 }
 
 const ICONS = {
-  pillars: ['layers', 'grid', 'spark'],
+  pillars: ['layers', 'grid', 'spark'] as string[],
   features: [
     'gauge', 'dns', 'worker', 'tunnel', 'rules', 'database',
     'ai', 'browser', 'api', 'store', 'shield', 'dual'
-  ],
-  scenarios: ['dev', 'ops', 'tunnel', 'self'],
-  deploys: ['cf', 'docker']
-} as const
+  ] as string[],
+  scenarios: ['dev', 'ops', 'tunnel', 'self'] as string[],
+  deploys: ['cf', 'docker'] as string[]
+}
+
+// Locale data item types
+interface PillarItem { title: string; desc: string; points: string[] }
+interface FeatureItem { title: string; desc: string }
+interface ScenarioItem { title: string; desc: string; points: string[] }
+interface DeployItem { title: string; badge: string; desc: string; steps: string[] }
+interface StackItem { k: string; v: string }
 
 export function useSiteData() {
   const { locale } = useI18n()
 
-  const data = computed(() => (locale.value === 'zh-CN' ? zhCN.data : en.data))
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data = computed(() => (locale.value === 'zh-CN' ? (zhCN as any).data : (en as any).data) as {
+    pillars: PillarItem[]
+    features: FeatureItem[]
+    scenarios: ScenarioItem[]
+    deploys: DeployItem[]
+    stack: StackItem[]
+    badges: Record<string, string>
+    siteFeatures: string[]
+  })
 
   const site = computed(() => ({
     ...META,
@@ -40,11 +56,11 @@ export function useSiteData() {
   }))
 
   const pillars = computed(() =>
-    data.value.pillars.map((item, i) => ({ icon: ICONS.pillars[i], ...item }))
+    data.value.pillars.map((item: PillarItem, i: number) => ({ icon: ICONS.pillars[i], ...item }))
   )
 
   const features = computed(() =>
-    data.value.features.map((item, i) => ({
+    data.value.features.map((item: FeatureItem, i: number) => ({
       icon: ICONS.features[i],
       ...item,
       badge: i === 3 ? data.value.badges.tunnel : i === 4 ? data.value.badges.rules : undefined
@@ -52,11 +68,11 @@ export function useSiteData() {
   )
 
   const scenarios = computed(() =>
-    data.value.scenarios.map((item, i) => ({ icon: ICONS.scenarios[i], ...item }))
+    data.value.scenarios.map((item: ScenarioItem, i: number) => ({ icon: ICONS.scenarios[i], ...item }))
   )
 
   const deploys = computed(() =>
-    data.value.deploys.map((item, i) => ({ icon: ICONS.deploys[i], ...item }))
+    data.value.deploys.map((item: DeployItem, i: number) => ({ icon: ICONS.deploys[i], ...item }))
   )
 
   const stack = computed(() => data.value.stack)
