@@ -4,6 +4,8 @@ CF Manager 是面向开发者与运维的**一站式 Cloudflare 多账户统一�
 
 支持可视化管理域名 DNS、Workers、Pages 与 KV / D1 / R2 存储，附带内置 AI 推理、网页渲染的本地调试能力，并提供**仅限内网本地使用**的 OpenAI 兼容适配接口。
 
+![仪表盘](/screenshots/dashboard.png)
+
 ## 三大核心能力
 
 | 能力 | 说明 |

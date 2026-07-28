@@ -10,6 +10,9 @@ Cloudflare Tunnel 在你的服务器与 Cloudflare 边缘节点之间建立一�
 - 自建服务通过 Cloudflare 边缘网络加速
 - 替代传统端口转发 / VPN
 
+![隧道管理](/screenshots/tunnels.png)
+- 替代传统端口转发 / VPN
+
 ## 功能概览
 
 | 操作 | 说明 |

@@ -2,6 +2,8 @@
 
 CF Manager 统一管理 Cloudflare Workers 脚本和 Pages 项目，支持单账户与跨账户批量运维。
 
+![Workers 与 Pages](/screenshots/workers.png)
+
 ## Workers 管理
 
 ### 功能概览

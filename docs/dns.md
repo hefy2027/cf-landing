@@ -6,6 +6,8 @@ CF Manager 统一管理多个 Cloudflare 账户下所有域名的 DNS 记录，�
 
 DNS 管理页面展示当前账户下所有域名的 Zone 列表，以及对应 DNS 记录数量和代理状态。点击 Zone 进入该域名的记录详情页。
 
+![DNS 管理](/screenshots/dns.png)
+
 ---
 
 ## DNS 记录管理

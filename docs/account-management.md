@@ -12,6 +12,8 @@ CF Manager 的核心能力是多账户统一管理。本文介绍面板中账户
 - 功能支持状态（AI / Workers / Browser Render / DNS / Storage / R2）
 - 连接状态（活跃/异常）
 
+![账号管理](/screenshots/accounts.png)
+
 ---
 
 ## 添加账户
