@@ -2,6 +2,15 @@
 
 Complete version history for CF Manager. Below is a summary of recent major updates. See the [GitHub CHANGELOG](https://github.com/hefy2027/cf-manager/blob/master/CHANGELOG.md) for the full log.
 
+## v1.4.1 (2026-07-27)
+
+### 🚀 Account Management Enhancements
+
+- **Per-Account Proxy**: Assign an independent proxy URL and enable switch per account; priority is "account proxy > global proxy > env var", isolated from each other
+- **Audit Log Filtering**: Filter audit logs by operation type and date range for easier tracing and troubleshooting
+- **Account Batch Operations**: Multi-select accounts, batch delete, and batch proxy configuration
+- **Account Settings Optimization**: Dedicated per-account proxy dialog; actions collapsed into a "More" dropdown, optimized for mobile narrow screens
+
 ## v1.4.0 (2026-07-24)
 
 ### 🚀 Tunnels & Rule Engine

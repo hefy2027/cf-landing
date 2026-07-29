@@ -4,7 +4,7 @@ export const site = {
   name: 'CF Manager',
   slogan: '一个面板，管完你的 Cloudflare',
   tagline: '一站式 Cloudflare 多账户统一运维平台',
-  version: '1.4.0',
+  version: '1.4.1',
   github: 'https://github.com/hefy2027/cf-manager',
   demo: 'https://cloud.umami.is/q/9GbJ5YAyt',
   demoPwd: 'cfmgrbest',

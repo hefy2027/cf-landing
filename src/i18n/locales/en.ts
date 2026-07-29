@@ -94,7 +94,7 @@ export default {
     name: 'CF Manager',
     slogan: 'One Panel, All Your Cloudflare',
     tagline: 'All-in-One Multi-Account Cloudflare Operations Platform',
-    version: '1.4.0'
+    version: '1.4.1'
   },
   data: {
     pillars: [

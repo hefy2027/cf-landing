@@ -52,7 +52,7 @@ export function useSiteData() {
     name: 'CF Manager',
     slogan: locale.value === 'zh-CN' ? '一个面板，管完你的 Cloudflare' : 'One Panel, All Your Cloudflare',
     tagline: locale.value === 'zh-CN' ? '一站式 Cloudflare 多账户统一运维平台' : 'All-in-One Multi-Account Cloudflare Operations Platform',
-    version: '1.4.0'
+    version: '1.4.1'
   }))
 
   const pillars = computed(() =>
