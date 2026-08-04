@@ -45,25 +45,20 @@ After deployment completes, visit `https://<your-project>.pages.dev/admin/`.
 
 ## Method 2: Docker Deploy
 
-Best for self-hosted servers — fully self-owned data.
+Best for self-hosted servers — fully self-owned data. The fastest path is to pull the prebuilt image directly (no cloning needed):
 
 ```bash
-# 1. Clone the project
-git clone https://github.com/hefy2027/cf-manager.git
-cd cf-manager
-
-# 2. Create config file
-cp .env.example .env
-
-# 3. Edit .env — at minimum set ENCRYPTION_KEY
-#    Optional: API_SECRET (login password), PROXY_URL (proxy), BASE_URL (e.g. /admin/)
-
-# 4. One-click deploy
-chmod +x deploy.sh
-./deploy.sh
-
-# 5. Visit http://localhost:3000 (or /admin/ if BASE_URL is set)
+docker run -d --name cf-manager -p 3000:3000 \
+  -e ENCRYPTION_KEY="your-strong-key" \
+  -e API_SECRET="your-strong-password" \
+  -v ./data:/app/data \
+  --restart unless-stopped \
+  ghcr.io/hefy2027/cf-manager:latest
 ```
+
+Visit `http://localhost:3000`.
+
+> For building from source or configuring a proxy, see [Deployment Guide](./deploy.md).
 
 ---
 
@@ -75,7 +70,6 @@ chmod +x deploy.sh
 | `API_SECRET` | No | Admin panel access password, leave empty for no login |
 | `PROXY_URL` | No | HTTP/SOCKS5 proxy address |
 | `APP_PORT` | No | External port, default `3000` |
-| `BASE_URL` | No | Frontend access path, e.g. `/admin/` (Docker only) |
 | `DEMO_ACCOUNT_IDS` | No | Demo-mode protected account IDs (comma-separated), protected accounts cannot be deleted/modified |
 | `KV` (Binding) | No | KV Namespace binding (Pages deploy only), for concurrency protection & cache routing |
 

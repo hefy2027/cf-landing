@@ -45,25 +45,20 @@ CF Manager 提供三种部署方式，从易到难任选其一。最快 3 分钟
 
 ## 方式二：Docker 部署
 
-适合自建服务器，数据完全自有。
+适合自建服务器，数据完全自有。最快方式是直接拉取预构建镜像（无需克隆仓库）：
 
 ```bash
-# 1. 克隆项目
-git clone https://github.com/hefy2027/cf-manager.git
-cd cf-manager
-
-# 2. 创建配置文件
-cp .env.example .env
-
-# 3. 编辑 .env，至少设置 ENCRYPTION_KEY
-#    可选：API_SECRET（登录密码）、PROXY_URL（代理）、BASE_URL（如 /admin/）
-
-# 4. 一键部署
-chmod +x deploy.sh
-./deploy.sh
-
-# 5. 访问 http://localhost:3000（或 /admin/ 如果设置了 BASE_URL）
+docker run -d --name cf-manager -p 3000:3000 \
+  -e ENCRYPTION_KEY="改成你的强密钥" \
+  -e API_SECRET="改成你的强密码" \
+  -v ./data:/app/data \
+  --restart unless-stopped \
+  ghcr.io/hefy2027/cf-manager:latest
 ```
+
+访问 `http://localhost:3000`。
+
+> 如需从源码构建或配置代理等，见 [部署文档](./deploy.md)。
 
 ---
 
@@ -75,7 +70,6 @@ chmod +x deploy.sh
 | `API_SECRET` | 否 | 管理界面访问密码，留空则无需登录 |
 | `PROXY_URL` | 否 | HTTP/SOCKS5 代理地址 |
 | `APP_PORT` | 否 | 对外端口，默认 `3000` |
-| `BASE_URL` | 否 | 前端访问路径，如 `/admin/`（仅 Docker 版） |
 | `DEMO_ACCOUNT_IDS` | 否 | 演示模式保护的账户 ID（逗号分隔），受保护账户不可删除/修改 |
 | `KV` (Binding) | 否 | KV Namespace 绑定（仅 Pages 部署），用于并发保护与缓存路由 |
 
