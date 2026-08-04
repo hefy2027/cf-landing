@@ -91,14 +91,31 @@ To also sync upstream changes:
 
 ## Method 1: Docker Deploy
 
-For users with their own server (VPS) — complete Node.js backend + Nginx frontend.
+For users with their own server (VPS) — a single container with the Node.js backend + frontend static files, no Nginx needed.
 
 ### Prerequisites
 
 - Docker and Docker Compose
 - A server that can reach the Cloudflare API (or configure a proxy)
 
-### Deployment Steps
+### Method A: Prebuilt Image (Recommended)
+
+No need to clone the repo — just pull and run the image:
+
+```bash
+docker run -d --name cf-manager -p 3000:3000 \
+  -e ENCRYPTION_KEY="cfmgrbest" \
+  -e API_SECRET="cfmgrbest" \
+  -v ./data:/app/data \
+  --restart unless-stopped \
+  ghcr.io/hefy2027/cf-manager:latest
+```
+
+> ⚠️ Change `ENCRYPTION_KEY` and `API_SECRET` to your own strong passwords before production use.
+
+Visit `http://<your-server-ip>:3000`.
+
+### Method B: Build from Source
 
 ```bash
 # 1. Clone the project
@@ -121,7 +138,6 @@ Edit `.env`:
 | `API_SECRET` | No | Admin panel access password, leave empty for no login |
 | `PROXY_URL` | No | HTTP/SOCKS5 proxy URL, e.g. `socks5://127.0.0.1:1080` |
 | `APP_PORT` | No | Exposed port, default `3000` |
-| `BASE_URL` | No | Frontend access path, e.g. `/admin/`, default `/`. Rebuild image after change |
 
 ### Start the Service
 
@@ -137,20 +153,25 @@ docker compose up -d --build
 docker compose logs -f
 ```
 
-Visit `http://<your-server-ip>:3000` (if `BASE_URL=/admin/`, visit `http://<your-server-ip>:3000/admin/`).
+Visit `http://<your-server-ip>:3000`.
 
 ### Updating
 
 ```bash
+# Prebuilt image
+docker pull ghcr.io/hefy2027/cf-manager:latest
+# re-run docker compose / docker run after pulling
+
+# Source build
 git pull
 ./deploy.sh
 ```
 
 ### Data Persistence
 
-- Database file: `backend/data/cf-manager.db`
-- Log files: `backend/data/logs/`
-- Docker Compose has volume mapping configured — data survives container removal
+- Database file: local `./data/` (`/app/data/cf-manager.db`)
+- Log files: `/app/data/logs/`
+- Docker Compose maps `./data:/app/data` — data survives container removal
 
 ### Local Development
 
@@ -169,22 +190,21 @@ npm run dev
 ### Docker Architecture
 
 ```
-                     ┌─────────────┐
-  User ──── :3000 ──▶│   Nginx     │
-                     │  (SPA)      │
-                     │  /api → :3001│
-                     └──────┬──────┘
-                            │
-                     ┌──────▼──────┐
-                     │  Node.js    │
-                     │  Express 5  │
-                     │  SQLite DB  │
-                     └──────┬──────┘
-                            │ (via proxy)
-                     ┌──────▼──────┐
-                     │ Cloudflare  │
-                     │    API      │
-                     └─────────────┘
+                     ┌───────────────┐
+  User ──── :3000 ──▶│  Node.js      │
+                     │  Express 5    │
+                     │               │
+                     │  /api/*  → API│
+                     │  /v1/*   → API│
+                     │  /*      → SPA│
+                     │               │
+                     │  SQLite DB    │
+                     └───────┬───────┘
+                             │
+                     ┌───────▼───────┐
+                     │ Cloudflare    │
+                     │    API        │
+                     └───────────────┘
 ```
 
 ---

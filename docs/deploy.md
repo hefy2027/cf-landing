@@ -91,14 +91,31 @@ Action 会自动完成：
 
 ## 方式一：Docker 部署
 
-适合有自建服务器（VPS）的用户，提供完整的 Node.js 后端 + Nginx 前端。
+适合有自建服务器（VPS）的用户。单容器包含 Node.js 后端 + 前端静态文件，无需 Nginx。
 
 ### 前置要求
 
 - Docker 和 Docker Compose
 - 一台可以访问 Cloudflare API 的服务器（或配置代理）
 
-### 部署步骤
+### 方式 A：使用预构建镜像（推荐）
+
+无需克隆仓库，直接拉取镜像运行：
+
+```bash
+docker run -d --name cf-manager -p 3000:3000 \
+  -e ENCRYPTION_KEY="cfmgrbest" \
+  -e API_SECRET="cfmgrbest" \
+  -v ./data:/app/data \
+  --restart unless-stopped \
+  ghcr.io/hefy2027/cf-manager:latest
+```
+
+> ⚠️ 请在生产环境前将 `ENCRYPTION_KEY` 和 `API_SECRET` 修改为自己的强密码。
+
+访问 `http://<your-server-ip>:3000`。
+
+### 方式 B：从源码构建
 
 ```bash
 # 1. 克隆项目
@@ -121,7 +138,6 @@ cp .env.example .env
 | `API_SECRET` | 否 | 管理界面访问密码，留空则无需登录 |
 | `PROXY_URL` | 否 | HTTP/SOCKS5 代理地址，如 `socks5://127.0.0.1:1080` |
 | `APP_PORT` | 否 | 对外暴露端口，默认 `3000` |
-| `BASE_URL` | 否 | 前端访问路径，如 `/admin/`，默认 `/`。设置后需重新构建镜像 |
 
 ### 启动服务
 
@@ -137,20 +153,25 @@ docker compose up -d --build
 docker compose logs -f
 ```
 
-访问 `http://<your-server-ip>:3000`（如配置了 `BASE_URL=/admin/`，则访问 `http://<your-server-ip>:3000/admin/`）。
+访问 `http://<your-server-ip>:3000`。
 
 ### 更新
 
 ```bash
+# 预构建镜像方式
+docker pull ghcr.io/hefy2027/cf-manager:latest
+# 如使用 docker-compose 则重新 up；或 stop/rm 后重新 docker run
+
+# 源码构建方式
 git pull
 ./deploy.sh
 ```
 
 ### 数据持久化
 
-- 数据库文件存储在 `backend/data/cf-manager.db`
-- 日志文件存储在 `backend/data/logs/`
-- Docker Compose 已配置 volume 映射，数据不会随容器销毁丢失
+- 数据库文件存储在本地 `./data/` 目录中（`/app/data/cf-manager.db`）
+- 日志文件存储在 `/app/data/logs/`
+- Docker Compose 已配置目录映射（`./data:/app/data`），数据不会随容器销毁丢失
 
 ### 本地开发
 
@@ -169,22 +190,21 @@ npm run dev
 ### Docker 架构
 
 ```
-                     ┌─────────────┐
-  用户 ──── :3000 ──▶│   Nginx     │
-                     │  (前端静态)  │
-                     │  /api → :3001│
-                     └──────┬──────┘
-                            │
-                     ┌──────▼──────┐
-                     │  Node.js    │
-                     │  Express 5  │
-                     │  SQLite DB  │
-                     └──────┬──────┘
-                            │ (通过代理)
-                     ┌──────▼──────┐
-                     │ Cloudflare  │
-                     │    API      │
-                     └─────────────┘
+                     ┌───────────────┐
+  用户 ──── :3000 ──▶│  Node.js      │
+                     │  Express 5    │
+                     │               │
+                     │  /api/*  → API│
+                     │  /v1/*   → API│
+                     │  /*      → SPA│
+                     │               │
+                     │  SQLite DB    │
+                     └───────┬───────┘
+                             │
+                     ┌───────▼───────┐
+                     │ Cloudflare    │
+                     │    API        │
+                     └───────────────┘
 ```
 
 ---

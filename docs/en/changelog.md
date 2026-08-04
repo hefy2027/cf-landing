@@ -2,6 +2,29 @@
 
 Complete version history for CF Manager. Below is a summary of recent major updates. See the [GitHub CHANGELOG](https://github.com/hefy2027/cf-manager/blob/master/CHANGELOG.md) for the full log.
 
+## v1.5.0 (2026-08-04)
+
+### 🚀 New Features
+
+- **Resin Proxy Pool Integration**: Native support for the [Resin](https://github.com/Resinat/Resin) proxy pool gateway, building a `http://Platform.{accountId}:Token@resin-host:port` proxy URL per CF account; sticky sessions bind each account to a stable egress IP, avoiding Cloudflare risk control triggered by frequent IP changes
+- **Proxy Priority Chain**: Per-account proxy (enabled) > Resin (enabled) > global proxy (enabled) > none. A per-account proxy can override Resin, letting individual accounts bypass the pool
+- **Docker Merged into Single Container (All-in-One)**: The former two-container setup (Nginx frontend + Node.js backend) is merged into a single Node.js container; Express serves frontend static files directly via `express.static` + `compression` (gzip, 30-day cache, SPA fallback) — no Nginx needed
+- **Prebuilt Images Published to GHCR**: On Release tag, multi-arch (amd64 + arm64) images are auto-built and pushed to `ghcr.io/hefy2027/cf-manager` — just `docker pull` to use
+
+### 🐛 Bug Fixes
+
+- Fixed missing `db` param in Worker batch deploy causing audit log loss
+- Fixed inconsistent deploy Modal account preselection (pagination source could mis-deploy to the wrong account)
+- Fixed incomplete account dropdown in Settings scheduled-task form
+- Fixed Workers page deploy button wrongly disabled after pagination
+
+### 🔧 Improvements
+
+- `proxyFetch` auto-uses Resin / per-account proxy; fixed proxy loss on retry
+- Deploy results now include `accountName` / `accountId` so the success dialog shows the target account
+- Simplified Docker deploy: single-service `docker-compose.yml`; removed `BASE_URL` env var (Docker path fixed to `/`)
+- `.dockerignore` updated for the new `docker/Dockerfile` path
+
 ## v1.4.1 (2026-07-27)
 
 ### 🚀 Account Management Enhancements

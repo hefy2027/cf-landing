@@ -2,6 +2,29 @@
 
 CF Manager 的完整版本记录。以下是近期主要更新摘要，完整内容见 [GitHub CHANGELOG](https://github.com/hefy2027/cf-manager/blob/master/CHANGELOG.md)。
 
+## v1.5.0 (2026-08-04)
+
+### 🚀 新特性
+
+- **Resin 代理池集成**：原生支持 [Resin](https://github.com/Resinat/Resin) 代理池网关，为每个 CF 账户构建 `http://Platform.{accountId}:Token@resin-host:port` 格式代理 URL，通过 sticky session 将每个账户绑定到稳定出口 IP，避免 Cloudflare 因 IP 频繁变动触发风控
+- **代理优先级链**：账户专属代理（已启用）> Resin（已启用）> 全局代理（已启用）> 无代理。账户专属代理可覆盖 Resin，允许个别账户不走代理池
+- **Docker 合并为单容器（All-in-One）**：原双容器（Nginx 前端 + Node.js 后端）合并为单一 Node.js 容器，Express 直接通过 `express.static` + `compression` 提供前端静态文件（gzip、30 天缓存、SPA 回退），不再依赖 Nginx
+- **预构建镜像发布到 GHCR**：Release 打 tag 时自动构建多架构（amd64 + arm64）镜像并推送至 `ghcr.io/hefy2027/cf-manager`，直接 `docker pull` 即可使用
+
+### 🐛 Bug 修复
+
+- 修复 Worker 端批量部署缺少 `db` 参数导致审计日志丢失
+- 修复部署 Modal 账户预选不一致（分页数据源导致误部署到错误账户）
+- 修复 Settings 定时任务表单账户下拉选项不全
+- 修复 Workers 页面部署按钮在分页翻页后被错误禁用
+
+### 🔧 优化
+
+- `proxyFetch` 支持自动使用 Resin / 账户代理，修复重试时丢失代理的 bug
+- 部署结果新增 `accountName` / `accountId` 字段，成功弹窗展示部署目标账户名
+- Docker 部署简化：`docker-compose.yml` 单服务；移除 `BASE_URL` 环境变量（Docker 版路径固定 `/`）
+- `.dockerignore` 适配新的 `docker/Dockerfile` 路径
+
 ## v1.4.1 (2026-07-27)
 
 ### 🚀 账户管理增强
