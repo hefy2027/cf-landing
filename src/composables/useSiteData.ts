@@ -20,7 +20,7 @@ const ICONS = {
   pillars: ['layers', 'grid', 'spark'] as string[],
   features: [
     'gauge', 'dns', 'worker', 'tunnel', 'rules', 'database',
-    'ai', 'browser', 'api', 'store', 'shield', 'dual'
+    'ai', 'browser', 'api', 'store', 'shield', 'dual', 'proxy'
   ] as string[],
   scenarios: ['dev', 'ops', 'tunnel', 'self'] as string[],
   deploys: ['cf', 'docker'] as string[]
@@ -52,7 +52,7 @@ export function useSiteData() {
     name: 'CF Manager',
     slogan: locale.value === 'zh-CN' ? '一个面板，管完你的 Cloudflare' : 'One Panel, All Your Cloudflare',
     tagline: locale.value === 'zh-CN' ? '一站式 Cloudflare 多账户统一运维平台' : 'All-in-One Multi-Account Cloudflare Operations Platform',
-    version: '1.4.1'
+    version: '1.5.0'
   }))
 
   const pillars = computed(() =>
@@ -63,7 +63,7 @@ export function useSiteData() {
     data.value.features.map((item: FeatureItem, i: number) => ({
       icon: ICONS.features[i],
       ...item,
-      badge: i === 3 ? data.value.badges.tunnel : i === 4 ? data.value.badges.rules : undefined
+      badge: i === 3 ? data.value.badges.tunnel : i === 4 ? data.value.badges.rules : i === 12 ? data.value.badges.resin : undefined
     }))
   )
 

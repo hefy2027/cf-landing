@@ -45,10 +45,10 @@ The demo site uses a fixed password (`cfmgrbest`). **In production, always use a
 
 ### Path Hiding
 
-The admin panel is accessed via the `/admin/` sub-path by default. The root path `/` displays a fake nginx welcome page, hiding the admin entry from external scanners.
+The admin panel access path depends on the deployment:
 
-> **Docker Edition**: Configure `BASE_URL` in `.env` to customize the admin path.
-> **Worker Edition**: Admin path is fixed at `/admin/`.
+- **Docker Edition**: Admin path is fixed at `/` — the root path serves the panel directly, no masking.
+- **Worker Edition**: Admin path is fixed at `/admin/`, and the root path is masked as a fake nginx welcome page to hide the admin entry from external scanners.
 
 ---
 

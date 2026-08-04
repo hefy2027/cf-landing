@@ -4,26 +4,13 @@ CF Manager 采用双后端架构，同一套业务逻辑分别适配 Docker 自�
 
 ## 整体架构
 
-```
-                      ┌─────────────────────┐
-                      │     Vue 3 前端        │
-                      │  Naive UI · Pinia    │
-                      │  base=/admin/        │
-                      └──────────┬──────────┘
-                                 │ /api/* /v1/*
-                    ┌────────────┴────────────┐
-                    │                         │
-            ┌───────▼───────┐        ┌───────▼──────────┐
-            │  Docker 版      │        │  Worker (Pages) 版│
-            │  Express 5      │        │  Hono             │
-            │  Cloudflare SDK  │        │  CF REST API      │
-            │  SQLite          │        │  D1 + KV           │
-            └───────┬───────┘        └───────┬──────────┘
-                    │                         │
-            ┌───────▼───────┐        ┌───────▼──────────┐
-            │  Cloudflare API │        │  Cloudflare API   │
-            │  (通过代理)     │        │  (CF 内网直达)    │
-            └───────────────┘        └──────────────────┘
+```mermaid
+flowchart TB
+    FE["Vue 3 前端<br/>Naive UI · Pinia<br/>base=/（Docker）· /admin/（Worker）"]
+    FE -->|"/api/* · /v1/*"| Docker["Docker 版<br/>Express 5<br/>Cloudflare SDK<br/>SQLite"]
+    FE -->|"/api/* · /v1/*"| Worker["Worker（Pages）版<br/>Hono<br/>CF REST API<br/>D1 + KV"]
+    Docker -->|"通过代理"| CF["Cloudflare API"]
+    Worker -->|"CF 内网直达"| CF
 ```
 
 ## 技术栈对比
@@ -67,12 +54,8 @@ cf-manager/
 │   ├── src/                  # Hono API 路由 + D1 模型
 │   ├── build.js              # 一键构建脚本
 │   └── wrangler.toml         # Wrangler 配置
-├── docker/                   # Docker 构建配置
-│   ├── backend/Dockerfile
-│   └── frontend/
-│       ├── Dockerfile
-│       ├── nginx.conf.template
-│       └── entrypoint.sh
+├── docker/                   # 单容器构建配置（docker/Dockerfile，All-in-One）
+│   └── Dockerfile
 ├── shared/                   # 双端共享配置
 │   ├── model-pricing.json    # AI 模型定价（含缓存价格）
 │   ├── catalog.schema.json   # Catalog 模板 JSON Schema

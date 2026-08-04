@@ -29,7 +29,7 @@ export default {
   features: {
     sectionTitle: '覆盖 Cloudflare 运维全链路',
     sectionLead:
-      '从域名 DNS 到边缘计算，从对象存储到 AI 推理，12 大模块一站式管理，结构化表单替代手写 JSON 与命令行。'
+      '从域名 DNS 到边缘计算，从对象存储到 AI 推理，13 大模块一站式管理，结构化表单替代手写 JSON 与命令行。'
   },
   scenarios: {
     sectionTitle: '谁在用 CF Manager',
@@ -94,7 +94,7 @@ export default {
     name: 'CF Manager',
     slogan: '一个面板，管完你的 Cloudflare',
     tagline: '一站式 Cloudflare 多账户统一运维平台',
-    version: '1.4.1'
+    version: '1.5.0'
   },
   data: {
     pillars: [
@@ -125,18 +125,19 @@ export default {
       { title: '浏览器渲染', desc: '截图 / HTML / Markdown / PDF / 链接提取 5 种模式，限速 + 配额管理 + SSRF 防护。' },
       { title: 'OpenAI 兼容 API', desc: '/v1/chat/completions、/v1/models 与浏览器渲染接口，流式 + 非流式，仅限内网本地调试。' },
       { title: '应用商店', desc: '内置 Catalog 模板市场，支持第三方源扩展，一键部署 Workers / Pages。' },
-      { title: '安全特性', desc: 'API Token AES 加密，可选登录密码，/admin/ 路径隐藏 + nginx 伪装根路径，完整审计日志。' },
-      { title: '双后端架构', desc: '同一套业务逻辑，Docker（Express + SQLite）与 Cloudflare Pages（Hono + D1）双部署，按需选择。' }
+      { title: '安全特性', desc: 'API Token AES 加密，可选登录密码，Worker 版 /admin/ 路径隐藏 + 根路径 nginx 伪装（Docker 版根路径即管理界面），完整审计日志。' },
+      { title: '双后端架构', desc: '同一套业务逻辑，Docker（Express 5 + SQLite 单容器 All-in-One）与 Cloudflare Pages（Hono + D1）双部署，按需选择。' },
+      { title: 'Resin 代理池', desc: '原生集成 Resin 代理池，为每个 Cloudflare 账户绑定稳定出口 IP（sticky session），避免 IP 频繁变动触发风控；代理优先级 账户专属 > Resin > 全局 > 无。' }
     ],
     scenarios: [
       { title: '个人开发者', desc: '把多个 Cloudflare 账户汇总到一个面板，本地调试 AI 推理与浏览器渲染，用 OpenAI 兼容接口接入自己的工具链。', points: ['告别多账户反复登录', '本地调试 AI / 渲染', 'OpenAI 兼容接口对接工具链'] },
       { title: '团队运维', desc: '统一管理团队名下域名、Workers、DNS 与存储，跨账户批量部署，配额与用量集中可视。', points: ['多账户权限集中管理', '跨账户批量部署', '配额用量一目了然'] },
       { title: '回源与组网', desc: '一键回源向导自动打通 Tunnel + DNS CNAME，结构化配置 Ingress，无需手写命令行。', points: ['可视化编辑 Ingress', 'CNAME 自动发现', '向导化操作，零命令行'] },
-      { title: '自托管私有部署', desc: 'Docker Compose 一键自建，HTTP/SOCKS5 代理支持，凭据加密不外泄，完全自有数据。', points: ['数据完全自控', 'AES 加密凭证', '代理网络环境适配'] }
+      { title: '自托管私有部署', desc: 'Docker Compose 一键自建，HTTP/SOCKS5 与 Resin 代理池（每账户 sticky IP）支持，凭据加密不外泄，完全自有数据。', points: ['数据完全自控', 'AES 加密凭证', '代理网络环境适配'] }
     ],
     deploys: [
       { title: 'Cloudflare Pages', badge: '零成本 \u00B7 推荐', desc: 'Fork 仓库后用 GitHub Actions 一键部署，或下载预构建包手动上传。基于 D1 + KV，无需服务器。', steps: ['Fork 仓库并配置环境 Secrets', 'Actions 触发 Deploy to Cloudflare Pages', '创建 D1 数据库并绑定 DB / KV', '访问 https://<project>.pages.dev/admin/'] },
-      { title: 'Docker Compose', badge: '自建服务器', desc: '克隆仓库，配置 .env 后执行一键部署脚本。基于 Express + SQLite + Nginx，数据完全自有。', steps: ['git clone 并 cp .env.example .env', '设置 ENCRYPTION_KEY 等环境变量', 'chmod +x deploy.sh && ./deploy.sh', '访问 http://localhost:3000'] }
+      { title: 'Docker Compose', badge: '自建服务器', desc: '推荐直接拉取 GHCR 预构建镜像（无需克隆仓库），或源码构建。基于 Express 5 + SQLite 单容器 All-in-One，数据完全自有。', steps: ['docker pull ghcr.io/hefy2027/cf-manager:latest', 'docker run -d -p 3000:3000 -v ./data:/app/data', '  配置 ENCRYPTION_KEY / API_SECRET', '访问 http://localhost:3000'] }
     ],
     stack: [
       { k: '前端', v: 'Vue 3 \u00B7 Naive UI \u00B7 Pinia' },
@@ -167,6 +168,7 @@ export default {
     badges: {
       tunnel: 'NEW',
       rules: 'NEW',
+      resin: 'NEW',
       cf: '零成本 \u00B7 推荐',
       docker: '自建服务器'
     }

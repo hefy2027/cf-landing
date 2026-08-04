@@ -77,6 +77,12 @@ defineProps<{ name: string; size?: number | string }>()
       <rect x="3" y="4" width="8" height="16" rx="1.5" />
       <rect x="13" y="4" width="8" height="16" rx="1.5" />
     </template>
+    <template v-else-if="name === 'proxy'">
+      <circle cx="6" cy="6" r="2.4" />
+      <circle cx="6" cy="18" r="2.4" />
+      <circle cx="18" cy="12" r="2.4" />
+      <path d="M8.2 7.2 15.8 10.8M8.2 16.8 15.8 13.2" />
+    </template>
 
     <!-- 场景图标 -->
     <template v-else-if="name === 'dev'">

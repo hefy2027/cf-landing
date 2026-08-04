@@ -96,12 +96,17 @@ export const features = [
   {
     icon: 'shield',
     title: '安全特性',
-    desc: 'API Token AES 加密，可选登录密码，/admin/ 路径隐藏 + nginx 伪装根路径，完整审计日志。'
+    desc: 'API Token AES 加密，可选登录密码，Worker 版 /admin/ 路径隐藏 + 根路径 nginx 伪装（Docker 版根路径即管理界面），完整审计日志。'
   },
   {
     icon: 'dual',
     title: '双后端架构',
-    desc: '同一套业务逻辑，Docker（Express + SQLite）与 Cloudflare Pages（Hono + D1）双部署，按需选择。'
+    desc: '同一套业务逻辑，Docker（Express 5 + SQLite 单容器 All-in-One）与 Cloudflare Pages（Hono + D1）双部署，按需选择。'
+  },
+  {
+    icon: 'proxy',
+    title: 'Resin 代理池',
+    desc: '原生集成 Resin 代理池，为每个 Cloudflare 账户绑定稳定出口 IP（sticky session），避免 IP 频繁变动触发风控；代理优先级 账户专属 > Resin > 全局 > 无。'
   }
 ]
 
@@ -128,7 +133,7 @@ export const scenarios = [
   {
     icon: 'self',
     title: '自托管私有部署',
-    desc: 'Docker Compose 一键自建，HTTP/SOCKS5 代理支持，凭据加密不外泄，完全自有数据。',
+    desc: 'Docker Compose 一键自建，HTTP/SOCKS5 与 Resin 代理池（每账户 sticky IP）支持，凭据加密不外泄，完全自有数据。',
     points: ['数据完全自控', 'AES 加密凭证', '代理网络环境适配']
   }
 ]
@@ -151,7 +156,7 @@ export const deploys = [
     icon: 'docker',
     title: 'Docker Compose',
     badge: '自建服务器',
-    desc: '克隆仓库，配置 .env 后执行一键部署脚本。基于 Express + SQLite + Nginx，数据完全自有。',
+    desc: '推荐直接拉取 GHCR 预构建镜像（无需克隆仓库），或源码构建。基于 Express 5 + SQLite 单容器 All-in-One，数据完全自有。',
     steps: [
       'git clone 并 cp .env.example .env',
       '设置 ENCRYPTION_KEY 等环境变量',

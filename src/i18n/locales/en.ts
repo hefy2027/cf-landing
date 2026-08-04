@@ -29,7 +29,7 @@ export default {
   features: {
     sectionTitle: 'Full-Stack Cloudflare Management',
     sectionLead:
-      'From DNS to edge computing, from object storage to AI inference — 12 modules in one place, with structured forms replacing raw JSON and CLI commands.'
+      'From DNS to edge computing, from object storage to AI inference — 13 modules in one place, with structured forms replacing raw JSON and CLI commands.'
   },
   scenarios: {
     sectionTitle: 'Who Uses CF Manager',
@@ -94,7 +94,7 @@ export default {
     name: 'CF Manager',
     slogan: 'One Panel, All Your Cloudflare',
     tagline: 'All-in-One Multi-Account Cloudflare Operations Platform',
-    version: '1.4.1'
+    version: '1.5.0'
   },
   data: {
     pillars: [
@@ -125,18 +125,19 @@ export default {
       { title: 'Browser Rendering', desc: '5 modes: screenshot/HTML/Markdown/PDF/link extraction, rate limiting + quota management + SSRF protection.' },
       { title: 'OpenAI Compatible API', desc: '/v1/chat/completions, /v1/models & browser rendering endpoints, streaming & non-streaming, local-only by design.' },
       { title: 'App Store', desc: 'Built-in Catalog template marketplace with third-party source support, one-click Workers/Pages deployment.' },
-      { title: 'Security', desc: 'API Token AES encryption, optional login password, /admin/ path hiding + nginx root path masking, full audit logs.' },
-      { title: 'Dual Backend Architecture', desc: 'Same business logic, dual deployment: Docker (Express + SQLite) or Cloudflare Pages (Hono + D1) — your choice.' }
+      { title: 'Security', desc: 'API Token AES encryption, optional login password, Worker edition /admin/ path hiding + nginx root masking (Docker edition serves the panel at root /), full audit logs.' },
+      { title: 'Dual Backend Architecture', desc: 'Same business logic, dual deployment: Docker (Express 5 + SQLite single All-in-One container) or Cloudflare Pages (Hono + D1) — your choice.' },
+      { title: 'Resin Proxy Pool', desc: 'Native Resin proxy pool integration binds a stable egress IP per Cloudflare account (sticky session) to avoid risk-control triggers from IP churn; proxy priority chain is per-account > Resin > global > none.' }
     ],
     scenarios: [
       { title: 'Indie Developers', desc: 'Aggregate multiple Cloudflare accounts into one panel, debug AI inference & browser rendering locally, integrate with your toolchain via OpenAI-compatible API.', points: ['No more multi-account logins', 'Local AI/rendering debugging', 'OpenAI API toolchain integration'] },
       { title: 'DevOps Teams', desc: 'Centralized domain, Workers, DNS & storage management for your team, cross-account batch deploy, unified quota & usage visibility.', points: ['Centralized permission management', 'Cross-account batch deployment', 'Quota visibility at a glance'] },
       { title: 'Tunneling & Networking', desc: 'One-click origin wizard auto-configures Tunnel + DNS CNAME, structured Ingress editing — zero CLI.', points: ['Visual Ingress editor', 'Auto CNAME discovery', 'Wizard-driven, zero CLI'] },
-      { title: 'Self-Hosted Private Deploy', desc: 'One-click Docker Compose setup, HTTP/SOCKS5 proxy support, encrypted credentials never leak, fully self-owned data.', points: ['Full data sovereignty', 'AES encrypted credentials', 'Proxy environment support'] }
+      { title: 'Self-Hosted Private Deploy', desc: 'One-click Docker Compose setup, HTTP/SOCKS5 & Resin proxy pool (per-account sticky IP) support, encrypted credentials never leak, fully self-owned data.', points: ['Full data sovereignty', 'AES encrypted credentials', 'Proxy environment support'] }
     ],
     deploys: [
       { title: 'Cloudflare Pages', badge: 'Free \u00B7 Recommended', desc: 'Fork & deploy via GitHub Actions, or download pre-built package for manual upload. Powered by D1 + KV, no server needed.', steps: ['Fork repo & configure Secrets', 'Actions triggers Deploy to Cloudflare Pages', 'Create D1 database & bind DB/KV', 'Visit https://<project>.pages.dev/admin/'] },
-      { title: 'Docker Compose', badge: 'Self-Hosted', desc: 'Clone repo, configure .env, run one-click deploy script. Express + SQLite + Nginx, fully self-owned data.', steps: ['git clone & cp .env.example .env', 'Set ENCRYPTION_KEY env vars', 'chmod +x deploy.sh && ./deploy.sh', 'Visit http://localhost:3000'] }
+      { title: 'Docker Compose', badge: 'Self-Hosted', desc: 'Recommended: pull the prebuilt GHCR image (no clone needed), or build from source. Single Express 5 + SQLite All-in-One container, fully self-owned data.', steps: ['docker pull ghcr.io/hefy2027/cf-manager:latest', 'docker run -d -p 3000:3000 -v ./data:/app/data', '  set ENCRYPTION_KEY / API_SECRET', 'Visit http://localhost:3000'] }
     ],
     stack: [
       { k: 'Frontend', v: 'Vue 3 \u00B7 Naive UI \u00B7 Pinia' },
@@ -167,6 +168,7 @@ export default {
     badges: {
       tunnel: 'NEW',
       rules: 'NEW',
+      resin: 'NEW',
       cf: 'Free \u00B7 Recommended',
       docker: 'Self-Hosted'
     }

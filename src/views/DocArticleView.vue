@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import mermaid from 'mermaid'
 import { useDocs } from '../composables/useDocs'
 import { renderMarkdown } from '../utils/markdown'
 import DocSidebar from '../components/DocSidebar.vue'
@@ -16,6 +17,24 @@ const idx = computed(() => (doc.value ? docs.value.findIndex((d) => d.slug === d
 const prev = computed(() => (idx.value > 0 ? docs.value[idx.value - 1] : null))
 const next = computed(() => (idx.value >= 0 && idx.value < docs.value.length - 1 ? docs.value[idx.value + 1] : null))
 watch(() => doc.value?.title, (title) => { if (title) document.title = `${title} ${t('doc.titleSuffix')}` }, { immediate: true })
+
+mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'strict' })
+
+watch(html, async () => {
+  await nextTick()
+  const blocks = document.querySelectorAll<HTMLElement>('.markdown-body pre code.language-mermaid')
+  blocks.forEach((code) => {
+    const pre = code.parentElement
+    if (!pre) return
+    const div = document.createElement('div')
+    div.className = 'mermaid'
+    div.textContent = code.textContent || ''
+    pre.replaceWith(div)
+  })
+  if (blocks.length) {
+    try { await mermaid.run() } catch (e) { console.error('[mermaid] render failed', e) }
+  }
+}, { immediate: true })
 </script>
 <template>
   <div class="doc-article-page">
@@ -58,4 +77,17 @@ watch(() => doc.value?.title, (title) => { if (title) document.title = `${title}
 .pager-title { font-size: 15px; font-weight: 600; color: var(--text); }
 .not-found { color: var(--text-muted); margin-bottom: 20px; }
 @media (max-width: 900px) { .doc-layout { flex-direction: column; gap: 0; } }
+</style>
+
+<style>
+.markdown-body .mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 28px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.markdown-body .mermaid svg { max-width: 100%; height: auto; }
 </style>

@@ -4,26 +4,13 @@ CF Manager uses a dual-backend architecture — the same business logic adapted 
 
 ## Overall Architecture
 
-```
-                      ┌─────────────────────┐
-                      │     Vue 3 Frontend     │
-                      │  Naive UI · Pinia    │
-                      │  base=/admin/        │
-                      └──────────┬──────────┘
-                                 │ /api/* /v1/*
-                    ┌────────────┴────────────┐
-                    │                         │
-            ┌───────▼───────┐        ┌───────▼──────────┐
-            │  Docker Edition │        │  Worker Edition   │
-            │  Express 5      │        │  Hono             │
-            │  Cloudflare SDK  │        │  CF REST API      │
-            │  SQLite          │        │  D1 + KV           │
-            └───────┬───────┘        └───────┬──────────┘
-                    │                         │
-            ┌───────▼───────┐        ┌───────▼──────────┐
-            │  Cloudflare API │        │  Cloudflare API   │
-            │  (via proxy)    │        │  (CF internal)    │
-            └───────────────┘        └──────────────────┘
+```mermaid
+flowchart TB
+    FE["Vue 3 Frontend<br/>Naive UI · Pinia<br/>base=/ (Docker) · /admin/ (Worker)"]
+    FE -->|"/api/* · /v1/*"| Docker["Docker Edition<br/>Express 5<br/>Cloudflare SDK<br/>SQLite"]
+    FE -->|"/api/* · /v1/*"| Worker["Worker (Pages) Edition<br/>Hono<br/>CF REST API<br/>D1 + KV"]
+    Docker -->|"via proxy"| CF["Cloudflare API"]
+    Worker -->|"CF internal"| CF
 ```
 
 ## Tech Stack Comparison
@@ -67,12 +54,8 @@ cf-manager/
 │   ├── src/                  # Hono API routes + D1 models
 │   ├── build.js              # One-click build script
 │   └── wrangler.toml         # Wrangler config
-├── docker/                   # Docker build config
-│   ├── backend/Dockerfile
-│   └── frontend/
-│       ├── Dockerfile
-│       ├── nginx.conf.template
-│       └── entrypoint.sh
+├── docker/                   # Single-container build config (docker/Dockerfile, All-in-One)
+│   └── Dockerfile
 ├── shared/                   # Shared configs across editions
 │   ├── model-pricing.json    # AI model pricing (with cache prices)
 │   ├── catalog.schema.json   # Catalog template JSON Schema

@@ -11,6 +11,7 @@ Common issues when running CF Manager and their solutions.
 **Cause**: The network proxy cannot handle all connections during multi-account concurrency.
 
 **Solution**:
+- Enable the **Resin Proxy Pool** (Settings → Resin Proxy Pool) to bind a stable egress IP per account
 - Switch to a more stable proxy service
 - Temporarily disable proxy in **System Settings** to test
 - Reduce concurrent request count

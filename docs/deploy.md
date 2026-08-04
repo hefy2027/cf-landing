@@ -456,7 +456,7 @@ wrangler pages project add-domain cf-manager your-domain.com
 |------|-------------|-------------|
 | 数据库 | SQLite (本地文件) | D1 (Cloudflare 托管) |
 | 缓存/并发控制 | Node Cache (内存) | KV + D1 兜底 |
-| 代理支持 | 支持 HTTP/SOCKS5 | 不需要（CF 内网） |
+| 代理支持 | 支持 HTTP/SOCKS5 · Resin 代理池（每账户 sticky IP） | 不需要（CF 内网） |
 | 加密算法 | Node.js crypto | Web Crypto API |
 | 定时任务 | node-cron | 不支持 |
 | 日志 | 文件日志 + winston | console.log + Logpush |

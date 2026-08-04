@@ -27,7 +27,7 @@ Both share the same Vue 3 + Naive UI frontend.
 
 - API Token / Global API Key stored with AES encryption
 - Optional login password to protect the admin panel
-- `/admin/` path hiding + root path masked as nginx default page
+- Path hiding: Worker edition `/admin/` path + root masked as nginx default page; Docker edition serves the panel at root `/`
 - Complete operation audit logs
 
 > ⚠️ **Disclaimer**: This tool is intended solely for learning, technical research, and self-management of authorized accounts. Please strictly follow [Cloudflare Terms of Service](https://www.cloudflare.com/terms/). Do not use for public AI/rendering relay services, resale, or compute sharing. Only add accounts that you own or have explicit authorization for.

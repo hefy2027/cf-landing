@@ -456,7 +456,7 @@ For personal management use, the Free plan is sufficient.
 |------|-------------|-------------|
 | Database | SQLite (local file) | D1 (Cloudflare managed) |
 | Cache/Concurrency | Node Cache (in-memory) | KV + D1 fallback |
-| Proxy Support | HTTP/SOCKS5 | Not needed (CF internal) |
+| Proxy Support | HTTP/SOCKS5 · Resin Proxy Pool (per-account sticky IP) | Not needed (CF internal) |
 | Encryption | Node.js crypto | Web Crypto API |
 | Cron Jobs | node-cron | Not supported |
 | Logging | File logs + winston | console.log + Logpush |

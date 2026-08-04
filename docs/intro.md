@@ -27,7 +27,7 @@ CF Manager 是面向开发者与运维的**一站式 Cloudflare 多账户统一�
 
 - API Token / Global API Key 采用 AES 加密存储
 - 可选登录密码保护管理界面
-- `/admin/` 路径隐藏 + 根路径伪装为 nginx 默认页
+- 路径隐藏：Worker 版 `/admin/` 路径 + 根路径伪装 nginx 默认页；Docker 版根路径即管理界面
 - 完整操作审计日志
 
 > ⚠️ **免责声明**：本工具仅供学习、技术研究与已授权账户的自有运维管理使用。请严格遵守 [Cloudflare 服务条款](https://www.cloudflare.com/terms/)，禁止用于对外提供公共 AI / 渲染中转服务、转售或分摊算力。仅添加你本人或已明确授权的 Cloudflare 账户。
