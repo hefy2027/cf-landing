@@ -2,6 +2,29 @@
 
 Complete version history for CF Manager. Below is a summary of recent major updates. See the [GitHub CHANGELOG](https://github.com/hefy2027/cf-manager/blob/master/CHANGELOG.md) for the full log.
 
+## v2.0.0 (2026-08-07)
+
+### 🚀 Major Update
+
+- **AI Image Generation (T2I/I2I)**: New AI image generation supporting Cloudflare Workers AI Text-to-Image and Image-to-Image models (Flux-1-Schnell, Stable Diffusion XL, etc.), new `POST /v1/images/generations` endpoint (OpenAI-compatible format)
+- **AI Text-to-Speech (TTS)**: New text-to-speech supporting Deepgram Aura models, new `POST /v1/audio/speech` endpoint (OpenAI-compatible format)
+- **AI Translation**: New text translation supporting M2M100 models, new `POST /v1/translations` endpoint
+- **Unified AI Workspace**: Merged AI chat, image, audio, translation, and stats into a unified menu with top Tab switching, route `/ai` points to the unified view
+- **Frontend Internationalization (i18n)**: Introduced vue-i18n with zh-CN / en bilingual UI (1000+ keys), auto-detects browser language and persists choice
+- **Zone Management (Create/Delete)**: DNS page now supports batch Zone create/delete with textarea input for multiple domains
+- **Zone Settings Management**: New Zone-level settings panel — SSL/TLS mode, Always HTTPS, auto HTTPS rewrite, security level, Auto Minify, Brotli compression, 0-RTT, etc.
+- **Zone Cache Management**: Purge all Zone cache or purge by URL; view/modify cache level, browser cache TTL, development mode
+- **Zone Status Management**: Pause/resume Zones directly in CF Manager
+- **DNS View UI Overhaul**: DNS page fully refactored — account filter, domain search, Zone status indicators, grouped collapsible lists, DNS record pagination, etc.
+
+### 🔧 Improvements
+
+- **Workers & Pages Deploy Enhancement**: Support for env vars (plain/secret) & bindings (KV/D1/R2/AI/DO/Service/Queue), config-only redeploy (secrets changes go through independent API without re-uploading code)
+- **Menu Rename**: "AI Inference" → "AI Workspace"
+- **Model Capability Detection**: Precisely identifies model-supported generation modes based on CF official docs
+- **Worker KV Cache**: Worker-side `getAllZones()` adds KV cache (5 min TTL)
+- **Batch Concurrency Pool**: Zone batch create/delete uses concurrency pool (concurrency=3)
+
 ## v1.5.0 (2026-08-04)
 
 ### 🚀 New Features

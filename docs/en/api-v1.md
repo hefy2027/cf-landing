@@ -22,7 +22,7 @@ Docker deployment default: `http://localhost:3000`. Local dev default: `http://l
 
 ---
 
-## AI Inference Endpoints
+## AI Endpoints
 
 ### List Models
 
@@ -142,6 +142,138 @@ data: [DONE]
     "message": "All accounts have reached daily neuron limit",
     "type": "quota_exceeded",
     "code": "ALL_ACCOUNTS_EXHAUSTED"
+  }
+}
+```
+
+---
+
+### Image Generation
+
+```
+POST /v1/images/generations
+```
+
+OpenAI Images API compatible, supporting Cloudflare Workers AI Text-to-Image and Image-to-Image models. Supports account rotation and neuron consumption tracking.
+
+**Request Body:**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `model` | string | Yes | Model name, e.g. `@cf/black-forest-labs/flux-1-schnell` |
+| `prompt` | string | Yes | Text prompt for image generation |
+| `image` | string | No | I2I mode: base64-encoded reference image |
+| `strength` | number | No | I2I guidance strength, default `0.6` |
+| `width` | number | No | Image width, default `1024` |
+| `height` | number | No | Image height, default `1024` |
+| `num_steps` | number | No | Number of generation steps |
+| `negative_prompt` | string | No | Negative prompt |
+
+**Example Request (T2I):**
+
+```json
+{
+  "model": "@cf/black-forest-labs/flux-1-schnell",
+  "prompt": "a cute cat sitting on a windowsill, watercolor style"
+}
+```
+
+**Example Response:**
+
+```json
+{
+  "created": 1718179200,
+  "data": [
+    {
+      "url": "data:image/png;base64,iVBORw0KGgo..."
+    }
+  ],
+  "usage": {
+    "neurons_used": 1234
+  }
+}
+```
+
+> **Tip**: Image-to-Image (I2I) mode is only available on select models (Flux 2, SDXL). The system auto-detects model capabilities and only shows the mode toggle button when both modes are supported.
+
+---
+
+### Text-to-Speech (TTS)
+
+```
+POST /v1/audio/speech
+```
+
+OpenAI Audio API compatible, supporting Cloudflare Workers AI Deepgram Aura models. Returns JSON base64 audio format.
+
+**Request Body:**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `model` | string | Yes | Model name, e.g. `@cf/deepgram/aura-2` |
+| `input` | string | Yes | Text to synthesize |
+| `voice` | string | No | Voice name |
+
+**Example Request:**
+
+```json
+{
+  "model": "@cf/deepgram/aura-2",
+  "input": "Hello, welcome to CF Manager!",
+  "voice": "aura-2-thalia-en"
+}
+```
+
+**Example Response:**
+
+```json
+{
+  "audio": "base64-encoded audio data",
+  "usage": {
+    "neurons_used": 567
+  }
+}
+```
+
+> Audio is returned in JSON base64 format, directly playable or downloadable in the frontend.
+
+---
+
+### Translation
+
+```
+POST /v1/translations
+```
+
+Supports Cloudflare Workers AI M2M100 models for multi-language translation. Supports account rotation and neuron consumption tracking.
+
+**Request Body:**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `model` | string | Yes | Model name, e.g. `@cf/meta/m2m100-1.2b` |
+| `input` | string | Yes | Text to translate |
+| `source_lang` | string | Yes | Source language code (e.g. `en`, `zh`) |
+| `target_lang` | string | Yes | Target language code |
+
+**Example Request:**
+
+```json
+{
+  "model": "@cf/meta/m2m100-1.2b",
+  "input": "Hello, world!",
+  "source_lang": "en",
+  "target_lang": "zh"
+}
+```
+
+**Example Response:**
+
+```json
+{
+  "translated_text": "你好，世界！",
+  "usage": {
+    "neurons_used": 89
   }
 }
 ```

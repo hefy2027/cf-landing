@@ -4,7 +4,7 @@ export const site = {
   name: 'CF Manager',
   slogan: '一个面板，管完你的 Cloudflare',
   tagline: '一站式 Cloudflare 多账户统一运维平台',
-  version: '1.5.0',
+  version: '2.0.0',
   github: 'https://github.com/hefy2027/cf-manager',
   demo: 'https://cloud.umami.is/q/9GbJ5YAyt',
   demoPwd: 'cfmgrbest',
@@ -34,8 +34,8 @@ export const pillars = [
   {
     icon: 'spark',
     title: 'OpenAI 兼容 AI 网关',
-    desc: 'Workers AI 全模型推理，Prompt Caching 感知计费，多账户配额调度，并暴露 OpenAI 兼容 /v1 接口供本地调试。',
-    points: ['全模型推理', '缓存感知计费', '配额自动调度', '/v1 兼容接口']
+    desc: 'Workers AI 全模型推理，对话 / 图片生成 / 语音合成 / 翻译四大能力，Prompt Caching 感知计费，多账户配额调度，并暴露 OpenAI 兼容 /v1 接口供本地调试。',
+    points: ['全模型推理', '图片/TTS/翻译', '缓存感知计费', '/v1 兼容接口']
   }
 ]
 
@@ -49,23 +49,21 @@ export const features = [
   {
     icon: 'dns',
     title: 'DNS 管理',
-    desc: 'A/AAAA/CNAME/MX/TXT 全记录管理，一键代理开关，批量操作。'
+    desc: 'A/AAAA/CNAME/MX/TXT 全记录管理，Zone 批量创建/删除、Zone 设置（SSL/缓存/安全）、缓存清除、暂停/激活。'
   },
   {
     icon: 'worker',
     title: 'Workers / Pages',
-    desc: '脚本与项目 CRUD，单/跨账户批量部署，绑定、环境变量、路由、自定义域名，Pages 支持回滚。'
+    desc: '脚本与项目 CRUD，单/跨账户批量部署，环境变量（明文/机密）与绑定（KV/D1/R2/AI/DO），仅更新配置重部署，Pages 回滚。'
   },
   {
     icon: 'tunnel',
     title: '隧道管理',
-    badge: 'NEW',
     desc: 'Tunnel 创建删除、Ingress 可视化编辑，一键回源向导自动配置 DNS CNAME + ingress。'
   },
   {
     icon: 'rules',
     title: '规则引擎',
-    badge: 'NEW',
     desc: '8 种规则类型（回源 / 重写 / 头转换 / 缓存 / 防火墙 / 限速 / 重定向），结构化表单 + 表达式生成器。'
   },
   {
@@ -75,8 +73,9 @@ export const features = [
   },
   {
     icon: 'ai',
-    title: 'AI 推理',
-    desc: 'Workers AI 全模型，流式对话 + Reasoning 可视化，历史上下文，多账户智能调度。'
+    title: 'AI 工作台',
+    badge: 'NEW',
+    desc: '统一 AI 控制台：对话 / 图片生成（文生图+图生图）/ 语音合成（TTS）/ 翻译 + 账户维度用量统计，多账户智能调度。'
   },
   {
     icon: 'browser',
@@ -86,7 +85,7 @@ export const features = [
   {
     icon: 'api',
     title: 'OpenAI 兼容 API',
-    desc: '/v1/chat/completions、/v1/models 与浏览器渲染接口，流式 + 非流式，仅限内网本地调试。'
+    desc: '/v1/chat/completions、/v1/images/generations、/v1/audio/speech、/v1/translations、/v1/models 与浏览器渲染接口，流式 + 非流式，仅限内网本地调试。'
   },
   {
     icon: 'store',
@@ -107,6 +106,12 @@ export const features = [
     icon: 'proxy',
     title: 'Resin 代理池',
     desc: '原生集成 Resin 代理池，为每个 Cloudflare 账户绑定稳定出口 IP（sticky session），避免 IP 频繁变动触发风控；代理优先级 账户专属 > Resin > 全局 > 无。'
+  },
+  {
+    icon: 'globe',
+    title: '国际化（i18n）',
+    badge: 'NEW',
+    desc: '内置中文（zh-CN）与英文（en）双语界面，1000+ 词条，自动检测浏览器语言并持久化，全站视图与组件国际化。'
   }
 ]
 
@@ -115,7 +120,7 @@ export const scenarios = [
   {
     icon: 'dev',
     title: '个人开发者',
-    desc: '把多个 Cloudflare 账户汇总到一个面板，本地调试 AI 推理与浏览器渲染，用 OpenAI 兼容接口接入自己的工具链。',
+    desc: '把多个 Cloudflare 账户汇总到一个面板，本地调试 AI 工作台（对话/绘图/语音/翻译）与浏览器渲染，用 OpenAI 兼容接口接入自己的工具链。',
     points: ['告别多账户反复登录', '本地调试 AI / 渲染', 'OpenAI 兼容接口对接工具链']
   },
   {

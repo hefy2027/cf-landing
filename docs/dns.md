@@ -1,12 +1,61 @@
 # DNS 管理
 
-CF Manager 统一管理多个 Cloudflare 账户下所有域名的 DNS 记录，支持记录 CRUD、代理开关与批量操作。
+CF Manager 统一管理多个 Cloudflare 账户下所有域名的 DNS 记录与 Zone 设置，支持记录 CRUD、Zone 批量创建/删除、Zone 设置管理、缓存清除、暂停/激活与批量操作。
 
 ## Zone 概览
 
-DNS 管理页面展示当前账户下所有域名的 Zone 列表，以及对应 DNS 记录数量和代理状态。点击 Zone 进入该域名的记录详情页。
+DNS 管理页面展示当前账户下所有域名的 Zone 列表，以及对应 DNS 记录数量和代理状态。v2.0.0 新增账户过滤器（默认选上次使用账户，localStorage 记忆）、域名搜索框、Zone 状态指示器（彩色圆点）、按账户分组折叠列表。点击 Zone 进入该域名的记录详情页。
 
 ![DNS 管理](/screenshots/dns.png)
+
+---
+
+## Zone 管理
+
+### 批量创建 Zone
+
+v2.0.0 新增批量创建 Zone 功能：
+
+1. 点击「创建 Zone」按钮
+2. 在 textarea 中每行输入一个域名
+3. 选择目标账户和 Zone 类型（Full / Partial）
+4. 提交后系统使用并发池（concurrency=3）批量创建
+5. 创建成功后展示 Cloudflare 分配的 NS 信息，支持一键复制
+
+### 批量删除 Zone
+
+- 域名列表支持 checkbox 多选
+- 选中后点击「批量删除」
+- 删除前二次确认防误操作
+- 使用并发池批量删除，避免 CF API 速率限制
+
+### Zone 设置管理
+
+v2.0.0 新增 Zone 级别设置面板，支持查看和修改以下设置项：
+
+| 设置项 | 说明 |
+|------|------|
+| SSL/TLS 模式 | Off / Flexible / Full / Full (Strict) |
+| Always HTTPS | 开启后所有 HTTP 请求自动重定向到 HTTPS |
+| 自动 HTTPS 重写 | 自动重写页面中的 HTTP 链接为 HTTPS |
+| 安全等级 | Off / Essentially Off / Low / Medium / High |
+| Auto Minify | HTML / CSS / JS 压缩 |
+| Brotli 压缩 | 启用 Brotli 压缩算法 |
+| 0-RTT | 0-RTT 连接恢复 |
+
+### Zone 缓存管理
+
+- **清除全部缓存**：一键清除 Zone 下所有缓存
+- **按 URL 清除缓存**：输入指定 URL 清除对应缓存
+- **缓存级别**：查看和修改缓存级别（No Query String / Ignore Query String / Standard / Aggressive）
+- **浏览器缓存 TTL**：查看和修改浏览器缓存 TTL
+- **开发模式**：临时绕过缓存，直接访问源站
+
+### Zone 状态管理
+
+- 支持在 CF Manager 中暂停 / 激活 Zone
+- 暂停前二次确认警告（暂停后该 Zone 的所有 Cloudflare 服务将停止）
+- 创建/删除 Zone 后自动清除 zones 缓存，确保列表数据实时性
 
 ---
 

@@ -1,12 +1,61 @@
 # DNS Management
 
-CF Manager provides unified DNS record management across multiple Cloudflare accounts, supporting CRUD operations, proxy toggles, and batch operations.
+CF Manager provides unified DNS record management and Zone settings across multiple Cloudflare accounts, supporting CRUD operations, Zone batch create/delete, Zone settings management, cache purge, pause/resume, and batch operations.
 
 ## Zone Overview
 
-The DNS management page displays all domain zones under the current account, along with their DNS record counts and proxy status. Click a zone to enter its record details.
+The DNS management page displays all domain zones under the current account, along with their DNS record counts and proxy status. v2.0.0 adds an account filter (defaults to last used, persisted in localStorage), domain search box, Zone status indicators (colored dots), and grouped collapsible lists by account. Click a zone to enter its record details.
 
 ![DNS Management](/screenshots/dns.png)
+
+---
+
+## Zone Management
+
+### Batch Create Zones
+
+v2.0.0 adds batch Zone creation:
+
+1. Click the "Create Zone" button
+2. Enter one domain per line in the textarea
+3. Select the target account and Zone type (Full / Partial)
+4. Submit — the system uses a concurrency pool (concurrency=3) for batch creation
+5. On success, Cloudflare-assigned NS information is displayed with one-click copy
+
+### Batch Delete Zones
+
+- Domain list supports checkbox multi-select
+- Click "Batch Delete" after selecting
+- Deletion requires confirmation to prevent accidental operation
+- Uses concurrency pool for batch deletion to avoid CF API rate limits
+
+### Zone Settings Management
+
+v2.0.0 adds a Zone-level settings panel supporting the following settings:
+
+| Setting | Description |
+|------|------|
+| SSL/TLS Mode | Off / Flexible / Full / Full (Strict) |
+| Always HTTPS | Automatically redirects all HTTP requests to HTTPS |
+| Auto HTTPS Rewrite | Automatically rewrites HTTP links to HTTPS in pages |
+| Security Level | Off / Essentially Off / Low / Medium / High |
+| Auto Minify | HTML / CSS / JS compression |
+| Brotli Compression | Enable Brotli compression algorithm |
+| 0-RTT | 0-RTT connection resumption |
+
+### Zone Cache Management
+
+- **Purge All Cache**: One-click purge of all cache under the Zone
+- **Purge by URL**: Enter specific URL to purge corresponding cache
+- **Cache Level**: View and modify cache level (No Query String / Ignore Query String / Standard / Aggressive)
+- **Browser Cache TTL**: View and modify browser cache TTL
+- **Development Mode**: Temporarily bypass cache, access origin directly
+
+### Zone Status Management
+
+- Pause / resume Zones directly in CF Manager
+- Pausing requires confirmation warning (all Cloudflare services for the Zone will stop)
+- Zone cache is automatically purged after create/delete to ensure real-time list data
 
 ---
 

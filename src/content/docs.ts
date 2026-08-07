@@ -76,7 +76,7 @@ export const docs: DocMeta[] = [
   {
     slug: 'dns',
     title: 'DNS 管理',
-    desc: 'A/AAAA/CNAME/MX/TXT 记录 CRUD、代理开关、批量操作与跨 Zone 管理。',
+    desc: '记录 CRUD、Zone 批量创建/删除、Zone 设置（SSL/缓存/安全）、缓存清除与暂停/激活。',
     group: '功能',
     order: 6,
     content: dnsRaw
@@ -84,7 +84,7 @@ export const docs: DocMeta[] = [
   {
     slug: 'workers-pages',
     title: 'Workers 与 Pages',
-    desc: 'Workers 脚本与 Pages 项目管理、跨账户批量部署、绑定与路由配置。',
+    desc: '脚本与项目管理、跨账户批量部署、环境变量与绑定、仅更新配置重部署。',
     group: '功能',
     order: 7,
     content: workersPagesRaw
@@ -107,8 +107,8 @@ export const docs: DocMeta[] = [
   },
   {
     slug: 'ai-rendering',
-    title: 'AI 推理与渲染',
-    desc: 'Workers AI 多模型对话、Prompt Caching 计费、浏览器渲染五种模式。',
+    title: 'AI 工作台与渲染',
+    desc: 'Workers AI 统一工作台：对话 / 图片生成 / TTS / 翻译 + 浏览器渲染五种模式。',
     group: '功能',
     order: 10,
     content: aiRenderingRaw

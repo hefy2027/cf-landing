@@ -1,10 +1,22 @@
-# AI Inference & Browser Rendering
+# AI Workspace & Browser Rendering
 
-CF Manager includes built-in AI inference chat and browser rendering engine, with intelligent scheduling and quota management across multiple accounts.
+CF Manager includes a unified AI workspace integrating chat, image generation, text-to-speech, and translation, along with a browser rendering engine, with intelligent scheduling and quota management across multiple accounts.
 
-## AI Inference
+## AI Workspace
+
+v2.0.0 merges AI chat, image, audio, translation, and stats into a unified menu with top Tab switching.
 
 ### Feature Overview
+
+| Tab | Capability | Description |
+|------|------|------|
+| **Stats** | Usage Stats | Per-account AI usage summary (neuron consumption, request count, etc.) |
+| **Chat** | AI Chat | Full Workers AI models, streaming output + Reasoning visualization, multi-turn context |
+| **Image** | Image Generation | Text-to-Image (T2I) and Image-to-Image (I2I), supports Flux-1-Schnell, SDXL, etc. |
+| **Audio** | TTS | Text-to-speech, supports Deepgram Aura models |
+| **Translation** | Text Translation | Supports M2M100 models, multi-language translation |
+
+### AI Chat
 
 | Feature | Description |
 |------|------|
@@ -14,6 +26,40 @@ CF Manager includes built-in AI inference chat and browser rendering engine, wit
 | Prompt Caching | Cache reuse reduces neuron consumption with billing awareness |
 | Multi-Account Scheduling | Auto-switch to next available account when quota is exhausted |
 | Model Comparison | Send the same prompt to multiple models simultaneously, compare results |
+
+### AI Image Generation
+
+Supports Cloudflare Workers AI Text-to-Image and Image-to-Image models:
+
+| Feature | Description |
+|------|------|
+| Text-to-Image (T2I) | Generate images from text prompts, supports Flux-1-Schnell, Stable Diffusion XL, etc. |
+| Image-to-Image (I2I) | Upload reference image + prompt to generate, supported by select models (Flux 2, SDXL) |
+| Advanced Parameters | Width/height, steps, guidance strength, negative prompt |
+| Model Capability Detection | Auto-detects model-supported generation modes, shows toggle button only when both modes are supported |
+| I2I Default Strength | Default `strength` = 0.6, preserves more original image features |
+| History Gallery | Generated image gallery with preview / download / reuse |
+| Reuse Function | Click "Reuse" to auto-switch to I2I mode using the generated image as reference |
+| Usage Display | Each image returns and displays neuron consumption (⚡ neurons badge) |
+
+### AI Text-to-Speech (TTS)
+
+| Feature | Description |
+|------|------|
+| Model Support | Cloudflare Workers AI Deepgram Aura models |
+| Voice Selection | Multiple preset voices available |
+| Output Format | JSON base64 audio, directly playable / downloadable |
+| Operations | Play / download / reuse / delete |
+| Usage Tracking | Neuron consumption tracking (per-character billing) |
+
+### AI Translation
+
+| Feature | Description |
+|------|------|
+| Model Support | Cloudflare Workers AI M2M100 models |
+| Language Selection | Source / target language dropdowns |
+| Operations | Translation result display / copy / neuron consumption display |
+| Usage Tracking | Neuron consumption tracking |
 
 ### Prompt Caching-Aware Billing
 
@@ -57,7 +103,7 @@ Uses the Cloudflare Browser Rendering API to render web pages into multiple form
 
 ## Multi-Account Quota Scheduling
 
-CF Manager implements automatic quota scheduling for both AI inference and browser rendering:
+CF Manager implements automatic quota scheduling for both AI workspace and browser rendering:
 
 ```
 Request → Account A available? → Yes → Return result

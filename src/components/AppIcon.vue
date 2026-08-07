@@ -83,6 +83,10 @@ defineProps<{ name: string; size?: number | string }>()
       <circle cx="18" cy="12" r="2.4" />
       <path d="M8.2 7.2 15.8 10.8M8.2 16.8 15.8 13.2" />
     </template>
+    <template v-else-if="name === 'globe'">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+    </template>
 
     <!-- 场景图标 -->
     <template v-else-if="name === 'dev'">

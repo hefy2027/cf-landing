@@ -76,10 +76,10 @@ const { site, stats } = useSiteData()
           />
         </div>
         <div class="float-card fc-1">
-          <AppIcon name="tunnel" :size="18" /><span>{{ t('hero.tunnelCard') }} <em class="fc-new">NEW</em></span>
+          <AppIcon name="ai" :size="18" /><span>{{ t('hero.aiImageCard') }} <em class="fc-new">NEW</em></span>
         </div>
         <div class="float-card fc-2">
-          <AppIcon name="rules" :size="18" /><span>{{ t('hero.rulesCard') }} <em class="fc-new">NEW</em></span>
+          <AppIcon name="globe" :size="18" /><span>{{ t('hero.i18nCard') }} <em class="fc-new">NEW</em></span>
         </div>
       </div>
     </div>

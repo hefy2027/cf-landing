@@ -60,7 +60,7 @@ Three ways to switch between accounts:
 
 1. **Global switch**: Top nav dropdown to select active account — all subsequent operations use this account
 2. **Page-level switch**: Switch at the top of Workers, DNS, Storage pages without affecting other pages
-3. **Auto-switch**: AI inference and browser rendering automatically rotate to the next available account when quota is exhausted
+3. **Auto-switch**: AI workspace and browser rendering automatically rotate to the next available account when quota is exhausted
 
 ---
 

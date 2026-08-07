@@ -2,7 +2,7 @@
 
 CF Manager 是面向开发者与运维的**一站式 Cloudflare 多账户统一运维管理平台**，解决多账号频繁切换后台、资源批量运维繁琐的问题。
 
-支持可视化管理域名 DNS、Workers、Pages 与 KV / D1 / R2 存储，附带内置 AI 推理、网页渲染的本地调试能力，并提供**仅限内网本地使用**的 OpenAI 兼容适配接口。
+支持可视化管理域名 DNS、Workers、Pages 与 KV / D1 / R2 存储，内置统一 AI 工作台（对话 / 图片生成 / 语音合成 / 翻译）与网页渲染的本地调试能力，并提供**仅限内网本地使用**的 OpenAI 兼容适配接口。
 
 ![仪表盘](/screenshots/dashboard.png)
 
@@ -12,7 +12,7 @@ CF Manager 是面向开发者与运维的**一站式 Cloudflare 多账户统一�
 |------|------|
 | **多账户统一管理** | API Token / Global API Key 双认证，凭证 AES 加密存储，多账户一键切换与调度 |
 | **全栈资源运维** | DNS、Workers、Pages、KV / D1 / R2、隧道与规则引擎，跨账户批量部署，结构化表单替代手写 JSON |
-| **OpenAI 兼容 AI 网关** | Workers AI 全模型推理，Prompt Caching 感知计费，多账户配额调度，暴露 `/v1` 接口供本地调试 |
+| **OpenAI 兼容 AI 网关** | Workers AI 全模型推理，对话 / 图片生成 / 语音合成 / 翻译四大能力，Prompt Caching 感知计费，多账户配额调度，暴露 `/v1` 接口供本地调试 |
 
 ## 双后端架构
 
@@ -21,7 +21,7 @@ CF Manager 是面向开发者与运维的**一站式 Cloudflare 多账户统一�
 - **Docker 版**：Express 5 + Cloudflare SDK + SQLite，自建服务器部署
 - **Worker 版**：Hono + Cloudflare REST API + D1，Cloudflare Pages 部署
 
-前端共享同一套 Vue 3 + Naive UI 界面。
+前端共享同一套 Vue 3 + Naive UI 界面，内置中英双语国际化（vue-i18n）。
 
 ## 安全特性
 

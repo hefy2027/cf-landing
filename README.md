@@ -34,7 +34,7 @@ landing/
 │   ├── workers-pages.md       #   Workers 与 Pages 管理
 │   ├── tunnel.md              #   隧道与回源
 │   ├── storage.md             #   存储管理（KV / D1 / R2）
-│   ├── ai-rendering.md        #   AI 推理与浏览器渲染
+│   ├── ai-rendering.md        #   AI 工作台与浏览器渲染
 │   ├── app-store.md           #   应用商店
 │   ├── api-v1.md              #   外部 API 文档
 │   ├── security.md            #   安全最佳实践

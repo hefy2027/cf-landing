@@ -2,6 +2,29 @@
 
 CF Manager 的完整版本记录。以下是近期主要更新摘要，完整内容见 [GitHub CHANGELOG](https://github.com/hefy2027/cf-manager/blob/master/CHANGELOG.md)。
 
+## v2.0.0 (2026-08-07)
+
+### 🚀 重大更新
+
+- **AI 图片生成（文生图/图生图）**：新增 AI 图片生成功能，支持 Cloudflare Workers AI 的 Text-to-Image 和 Image-to-Image 模型（Flux-1-Schnell、Stable Diffusion XL 等），新增 `POST /v1/images/generations` 端点（OpenAI 兼容格式）
+- **AI 语音合成（TTS）**：新增文字转语音功能，支持 Deepgram Aura 系列模型，新增 `POST /v1/audio/speech` 端点（OpenAI 兼容格式）
+- **AI 翻译**：新增文本翻译功能，支持 M2M100 系列模型，新增 `POST /v1/translations` 端点
+- **AI 工作台统一视图**：将 AI 对话、绘图、语音、翻译、统计合并为统一菜单，顶部 Tab 切换，路由 `/ai` 指向统一视图
+- **前端国际化（i18n）**：引入 vue-i18n，支持中文（zh-CN）与英文（en）双语界面（1000+ 词条），自动检测浏览器语言并持久化
+- **Zone 管理（创建/删除）**：DNS 管理页面新增批量创建和删除 Zone 功能，支持 textarea 每行一个域名批量添加
+- **Zone 设置管理**：新增 Zone 级别设置面板，支持 SSL/TLS 模式、Always HTTPS、自动 HTTPS 重写、安全等级、Auto Minify、Brotli 压缩、0-RTT 等
+- **Zone 缓存管理**：支持清除 Zone 全部缓存或按 URL 清除缓存，可查看和修改缓存级别、浏览器缓存 TTL、开发模式
+- **Zone 状态管理**：支持在 CF Manager 中暂停/激活 Zone
+- **DNS View UI 重构**：DNS 管理页面全面重构，新增账户过滤器、域名搜索框、Zone 状态指示器、按账户分组折叠列表、DNS 记录分页等
+
+### 🔧 优化
+
+- **Workers & Pages 部署增强**：支持环境变量（明文/机密）与绑定（KV/D1/R2/AI/DO/Service/Queue），仅更新配置重部署（secrets 变更走独立 API 不重传代码）
+- **菜单优化**：「AI 推理」→「AI 工作台」重命名
+- **模型能力检测**：基于 CF 官方文档精确识别模型支持的生成模式
+- **Worker KV 缓存**：Worker 端 `getAllZones()` 新增 KV 缓存（5 分钟 TTL）
+- **批量操作并发池**：Zone 批量创建/删除使用并发池（concurrency=3）
+
 ## v1.5.0 (2026-08-04)
 
 ### 🚀 新特性

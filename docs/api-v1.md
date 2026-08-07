@@ -22,7 +22,7 @@ Docker 部署默认为 `http://localhost:3000`，本地开发为 `http://localho
 
 ---
 
-## AI 推理接口
+## AI 接口
 
 ### 获取模型列表
 
@@ -142,6 +142,138 @@ data: [DONE]
     "message": "All accounts have reached daily neuron limit",
     "type": "quota_exceeded",
     "code": "ALL_ACCOUNTS_EXHAUSTED"
+  }
+}
+```
+
+---
+
+### 图片生成
+
+```
+POST /v1/images/generations
+```
+
+兼容 OpenAI Images API，支持 Cloudflare Workers AI 的 Text-to-Image 和 Image-to-Image 模型。支持账户轮换、神经元消耗追踪。
+
+**请求体：**
+
+| 字段 | 类型 | 必填 | 说明 |
+|---|---|---|---|
+| `model` | string | 是 | 模型名称，如 `@cf/black-forest-labs/flux-1-schnell` |
+| `prompt` | string | 是 | 生成图片的提示词 |
+| `image` | string | 否 | 图生图模式：base64 编码的参考图片 |
+| `strength` | number | 否 | 图生图引导强度，默认 `0.6` |
+| `width` | number | 否 | 图片宽度，默认 `1024` |
+| `height` | number | 否 | 图片高度，默认 `1024` |
+| `num_steps` | number | 否 | 生成步数 |
+| `negative_prompt` | string | 否 | 反向提示词 |
+
+**请求示例（文生图）：**
+
+```json
+{
+  "model": "@cf/black-forest-labs/flux-1-schnell",
+  "prompt": "a cute cat sitting on a windowsill, watercolor style"
+}
+```
+
+**响应示例：**
+
+```json
+{
+  "created": 1718179200,
+  "data": [
+    {
+      "url": "data:image/png;base64,iVBORw0KGgo..."
+    }
+  ],
+  "usage": {
+    "neurons_used": 1234
+  }
+}
+```
+
+> **提示**：图生图模式（I2I）仅在部分模型上可用（Flux 2、SDXL）。系统会自动检测模型能力，仅当模型同时支持两种模式时才显示模式切换按钮。
+
+---
+
+### 语音合成（TTS）
+
+```
+POST /v1/audio/speech
+```
+
+兼容 OpenAI Audio API，支持 Cloudflare Workers AI 的 Deepgram Aura 系列模型。返回 JSON base64 音频格式。
+
+**请求体：**
+
+| 字段 | 类型 | 必填 | 说明 |
+|---|---|---|---|
+| `model` | string | 是 | 模型名称，如 `@cf/deepgram/aura-2` |
+| `input` | string | 是 | 要合成语音的文本 |
+| `voice` | string | 否 | 语音名称 |
+
+**请求示例：**
+
+```json
+{
+  "model": "@cf/deepgram/aura-2",
+  "input": "Hello, welcome to CF Manager!",
+  "voice": "aura-2-thalia-en"
+}
+```
+
+**响应示例：**
+
+```json
+{
+  "audio": "base64编码的音频数据",
+  "usage": {
+    "neurons_used": 567
+  }
+}
+```
+
+> 音频以 JSON base64 格式返回，可直接在前端播放或下载。
+
+---
+
+### 翻译
+
+```
+POST /v1/translations
+```
+
+支持 Cloudflare Workers AI 的 M2M100 系列模型，多语言互译。支持账户轮换、神经元消耗追踪。
+
+**请求体：**
+
+| 字段 | 类型 | 必填 | 说明 |
+|---|---|---|---|
+| `model` | string | 是 | 模型名称，如 `@cf/meta/m2m100-1.2b` |
+| `input` | string | 是 | 要翻译的文本 |
+| `source_lang` | string | 是 | 源语言代码（如 `en`、`zh`） |
+| `target_lang` | string | 是 | 目标语言代码 |
+
+**请求示例：**
+
+```json
+{
+  "model": "@cf/meta/m2m100-1.2b",
+  "input": "Hello, world!",
+  "source_lang": "en",
+  "target_lang": "zh"
+}
+```
+
+**响应示例：**
+
+```json
+{
+  "translated_text": "你好，世界！",
+  "usage": {
+    "neurons_used": 89
   }
 }
 ```

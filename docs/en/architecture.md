@@ -80,7 +80,7 @@ cf-manager/
 
 ### Multi-Account Scheduling Strategy
 
-The account scheduling logic for AI inference and browser rendering:
+The account scheduling logic for AI workspace and browser rendering:
 
 - **Round-robin + quota check**: Tries active accounts in order, skipping exhausted (4006) accounts
 - **Prompt Caching stickiness**: Cache models prioritize the most recently used account, only switching when usage deviation exceeds 10,000 neurons

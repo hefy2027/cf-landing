@@ -2,7 +2,7 @@
 
 CF Manager is a **all-in-one multi-account Cloudflare operations platform** designed for developers and DevOps teams. It solves the pain of constantly switching between Cloudflare dashboards and managing resources across accounts.
 
-It provides visual management for DNS, Workers, Pages, and KV/D1/R2 storage, along with built-in AI inference, browser rendering for local debugging, and an **internal/local-only** OpenAI-compatible API.
+It provides visual management for DNS, Workers, Pages, and KV/D1/R2 storage, along with a unified AI workspace (chat / image generation / TTS / translation) and browser rendering for local debugging, and an **internal/local-only** OpenAI-compatible API.
 
 ![Dashboard](/screenshots/dashboard.png)
 
@@ -12,7 +12,7 @@ It provides visual management for DNS, Workers, Pages, and KV/D1/R2 storage, alo
 |------|------|
 | **Multi-Account Management** | API Token / Global API Key dual authentication, AES credential encryption, one-click account switching & scheduling |
 | **Full-Stack Resource Ops** | Visual management for DNS, Workers, Pages, KV/D1/R2, Tunnels & rule engines, cross-account batch deployment with structured forms instead of raw JSON |
-| **OpenAI-Compatible AI Gateway** | Full Workers AI model inference, Prompt Caching-aware billing, multi-account quota scheduling, and `/v1` endpoints for local debugging |
+| **OpenAI-Compatible AI Gateway** | Full Workers AI model inference — chat / image generation / TTS / translation, Prompt Caching-aware billing, multi-account quota scheduling, and `/v1` endpoints for local debugging |
 
 ## Dual Backend Architecture
 
@@ -21,7 +21,7 @@ Same business logic, deployed in two ways:
 - **Docker Edition**: Express 5 + Cloudflare SDK + SQLite, self-hosted server deployment
 - **Worker Edition**: Hono + Cloudflare REST API + D1, Cloudflare Pages deployment
 
-Both share the same Vue 3 + Naive UI frontend.
+Both share the same Vue 3 + Naive UI frontend with built-in zh-CN / en bilingual internationalization (vue-i18n).
 
 ## Security Features
 
